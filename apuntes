@@ -1,0 +1,100 @@
+Diseño y analisis de algoritmos
+V. Cubells
+
+Primer parcial: Lunes 14 de septiembre
+Segundo parcial: Lunes 26 de octubre
+Examen Final: Martes 01 de diciembre a las 12:00
+
+- Un algoritmo es una serie finita de pasos para resolver un problema
+- Conjunto de reglas operacionales inherentes a un computo
+
+
+Eficiiencia de un algoritmo
+  - Complejidad temporal = T(n)
+    T(n) =  Sumatoria(num * c)
+    donde
+     num = es el numero de veces que se ejecuta la instruccion i
+    c = es el costo de
+  - Complejidad espacial = S(n) .... Donde n es el tamaño de la entrada
+  - El peor caso ---> Notación O grande
+    * f(n) es O(g(n)) si f crece a lo sumo tan rápido como g
+    * f(n) es O(g(n)) si existe un entero n0 y una constante c > 0, tal que, para
+      todos los enteros de n >= n0 se cumple que: f(n) <= cg(n)
+  - El mejor caso ---> Notacion omega grande
+  - Algunas propidades
+    * Transitividad
+    * Reflexividad
+    * Simetria
+    * Simetria transpuesta
+
+
+Ejercicios
+  Analisis del algoritmo de multiplicacion de matrices
+
+    for(int i = 0; i < N ; i++){
+      for (int j = 0; j < N; j++){
+        resultado [i][j] = 0;
+        for (int k = 0; k < N; k++){
+          resultado[i][j] += matrizA[i][k] * matrizB[k][j];
+        }
+      }
+    }
+
+
+    linea |   OE   |   m   |   p   |   1/2   |
+    ------------------------------------------
+    1     | 1 (1)  |       | 1+n+1 |
+          | 1 (n+1)|       | +n    |
+          | 1 (n)  |       |       |
+(n)  2    | 1 (1)  |       | n+n²+ |
+          | 1 (n+1)|       | n+n²  |
+          | 1 (n)  |       |       |
+     3    | 1 (n)  |
+          | 1 (n)  |
+  (n) 4   | 1 (1)  |
+          | 1 (n+1)|
+          | 1 (n)  |
+      5   | 1 (n)  |
+          | 1 (n)  |
+          | 1 (n)  |
+          | 1 (n)  |
+          | 1 (n)  |
+
+    Cuando terminas la tablita te das cuenta que
+      * O(n³)
+      * omega (n³)
+      * promedio (n³)
+
+
+
+Funciones recursivas
+  Potencia
+    int potencia(int x, int n){
+      if( n == 0){
+        return 1;
+      }else{
+        return( x * potencia(x, n-1));
+      }
+    }
+  Resolucion
+    T(n) = 1 + T(n-1) n> 0
+    T(n) = 1
+
+
+  Fibonacci
+    int fib(int n){
+      if(n == 0 || n == 1){
+        return 1;
+      }else{
+        return fib(n - 1) + fib(n - 2);
+      }
+    }
+    Resolucion
+      T(n) = T(n - 1) + T(n - 2)
+      n² = n + 1
+      n² - n - 1 = 0
+
+
+
+
+ 
