@@ -20,10 +20,15 @@ void insercion(int v[], int n);
 void bucket(int v[], const int n);
 void counting(int arr[],int len);
 void mergeSort(int v[], int l, int n, int N);
+void seleccion(int v[], int n);
+void quicksort(int v[], int primero, int ultimo);
+void heap(int a[], int n);
+  void BUILD_MAX_HEAP(int a[], int n);
+  void MAX_HEAPIFY(int a[], int i, int n);
 
 
 int main(){
-  int n =  100;
+  int n =  10000;
   int A[n] , B[n];
   for(int i = 0; i < n; ++i){
     A[i] = rand() % 10000;
@@ -64,10 +69,34 @@ int main(){
 
   //Merge
   start = std::chrono::high_resolution_clock::now();
-  //void mergeSort(int A[], int l, int n, int N);
+  mergeSort(A, 0, n-1, n);
   end = std::chrono::high_resolution_clock::now();
   auto mergeCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
   std::cout << "Merge:  " << mergeCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
+  //Selection
+  start = std::chrono::high_resolution_clock::now();
+  seleccion(A, n);
+  end = std::chrono::high_resolution_clock::now();
+  auto selCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Selection:  " << selCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
+  //quick
+  start = std::chrono::high_resolution_clock::now();
+  quicksort(A, 0, n-1);
+  end = std::chrono::high_resolution_clock::now();
+  auto qCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Quick:  " << qCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
+  //heap
+  start = std::chrono::high_resolution_clock::now();
+  heap(A, n);
+  end = std::chrono::high_resolution_clock::now();
+  auto heapCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Heap:  " << heapCount.count() << std::endl;
   mismoArreglo(A, B, n);
 
   /*
@@ -92,7 +121,6 @@ void burbuja(int v[], int n){
     }
   }
 }
-
 
 /*
 Cocktail sort o burbuja vidireccional hace lo mismo que el de burbuja pero para
@@ -184,10 +212,9 @@ void counting(int arr[],int len){
   delete [] temp;
 }
 
-
 /*
 Merge Sort va dividiendo en mitades los arreglos recursivamente
-
+*/
 void merge(int v[], int l, int m, int n, int N){
     int i, j, k;
     int aux[N];   //Vector auxiliar
@@ -201,7 +228,6 @@ void merge(int v[], int l, int m, int n, int N){
         else
             v[k] = aux[j--];
 }
-
 void mergeSort(int v[], int l, int n, int N){
     int m = (n+l)/2;
     if (n > l){
@@ -210,7 +236,7 @@ void mergeSort(int v[], int l, int n, int N){
         merge (v, l, m, n, N);
     }
 }
-*/
+
 
 /*
 Binary tree Sort
@@ -225,16 +251,97 @@ Shell Sort
 */
 
 /*
-Selection Sort
+Selection Sort busca el minimo de la lista y lo compara con el primero
 */
+void seleccion(int v[], int n){
+    int minimo = 0;
+    int temp;
+
+    for(int i = 0; i < n-1; i++){
+        minimo = i;
+        for(int j = i + 1; j < n; j++){
+            if (v[minimo] > v[j])
+                minimo = j;
+        }
+        temp = v[minimo];
+        v[minimo] = v[i];
+        v[i] = temp;
+    }
+}
 
 /*
-Heap Sort
+Heap Sort se basa en montículos(Monticulo es un arbol en el que todos los hijos
+  de un nodo son menores a el) y va sacando nodo por nodo para que quede ordenado
 */
+void MAX_HEAPIFY(int a[], int i, int n){
+  int l,r,largest,loc;
+  l=2*i;
+  r=(2*i+1);
+  if((l<=n)&&a[l]>a[i])
+    largest=l;
+  else
+   largest=i;
+  if((r<=n)&&(a[r]>a[largest]))
+   largest=r;
+  if(largest!=i){
+   loc=a[i];
+   a[i]=a[largest];
+   a[largest]=loc;
+   MAX_HEAPIFY(a, largest,n);
+  }
+}
+void BUILD_MAX_HEAP(int a[], int n){
+  for(int k = n/2; k >= 1; k--){
+    MAX_HEAPIFY(a, k, n);
+  }
+}
+void heap(int a[], int n){
+  BUILD_MAX_HEAP(a,n);
+  int i, temp;
+  for (i = n; i >= 2; i--){
+      temp = a[i];
+      a[i] = a[1];
+      a[1] = temp;
+      MAX_HEAPIFY(a, 1, i - 1);
+  }
+}
 
 /*
-Quick Sort
+Quick Sort divide el arreglo en 2 y pone un valor en medio llamado el pivote
+  y de ahi ya empezamos a ordenar en base a ese pivotey vaos subdividiendo las
+  listas de manera recursiva
 */
+void quicksort(int v[], int primero, int ultimo){
+    int izquierdo = primero;
+    int derecho = ultimo;
+    int temp;
+    //Se selecciona pivote
+    int pivote = v[primero];
+
+    if ( primero < ultimo){ // Paso base
+        // particion
+        while ( izquierdo < derecho){
+            while ( (izquierdo < derecho) && !(v[izquierdo] > pivote)) izquierdo++; // <=
+            while ( v[derecho] > pivote ) derecho--; // >
+            if ( izquierdo < derecho){ // se intercambian los contenidos
+                temp = v[derecho];
+                v[derecho] = v[izquierdo];
+                v[izquierdo] = temp;
+            }
+        }
+        // Se intercambia el pivote con el elemento de la posición derecha
+        temp = v[derecho];
+        v[derecho] = v[primero];
+        v[primero] = temp;
+
+        // Paso recursivo
+        quicksort ( v, primero, derecho-1);
+        quicksort ( v, izquierdo, ultimo);
+    }
+}
+
+
+
 
 void findMinMax( int* arr, int len, int& mi, int& mx ){
   mi = INT_MAX; mx = 0;
@@ -261,5 +368,5 @@ void mismoArreglo(int a[], int b[], int n){
 /*
 Bibliografía
   cocktail --> http://rosettacode.org/wiki/Sorting_algorithms/Cocktail_sort#C.2B.2B
-
+  heap --> http://www.coders-hub.com/2015/02/heap-sort-using-c.html#.VecDhK3Il4s
 */
