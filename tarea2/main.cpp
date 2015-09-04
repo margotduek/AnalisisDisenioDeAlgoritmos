@@ -6,6 +6,7 @@ Analisis y diseño de algoritmos
 
 #include <iostream>
 #include <chrono>
+#include <vector>
 #include <ctime>
 #include <cstring>
 #include <climits>
@@ -25,13 +26,17 @@ void quicksort(int v[], int primero, int ultimo);
 void heap(int a[], int n);
   void BUILD_MAX_HEAP(int a[], int n);
   void MAX_HEAPIFY(int a[], int i, int n);
-
+void radix(int v[], int N);
+  int getMax(int v[], int N);
+  void countSort(int v[], int N, int exp);
+void shell(int v[], int N);
+void binarySort(int a[], int N);
 
 int main(){
-  int n =  10000;
+  int n =  1000;
   int A[n] , B[n];
   for(int i = 0; i < n; ++i){
-    A[i] = rand() % 10000;
+    A[i] = rand() % 100;
     B[i] = A[i];
   }
 
@@ -67,6 +72,14 @@ int main(){
   std::cout << "Counting:  " << countingCount.count() << std::endl;
   mismoArreglo(A, B, n);
 
+  //Bucket
+  start = std::chrono::high_resolution_clock::now();
+  bucket(A, n);
+  end = std::chrono::high_resolution_clock::now();
+  auto bucketCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Bucket:  " << bucketCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
   //Merge
   start = std::chrono::high_resolution_clock::now();
   mergeSort(A, 0, n-1, n);
@@ -97,6 +110,30 @@ int main(){
   end = std::chrono::high_resolution_clock::now();
   auto heapCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
   std::cout << "Heap:  " << heapCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
+  //Radix
+  start = std::chrono::high_resolution_clock::now();
+  radix(A, n);
+  end = std::chrono::high_resolution_clock::now();
+  auto radixCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Radix:  " << radixCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
+  //Shell
+  start = std::chrono::high_resolution_clock::now();
+  shell(A, n);
+  end = std::chrono::high_resolution_clock::now();
+  auto shellCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Shell:  " << shellCount.count() << std::endl;
+  mismoArreglo(A, B, n);
+
+  //Binary
+  start = std::chrono::high_resolution_clock::now();
+  binarySort(A, n);
+  end = std::chrono::high_resolution_clock::now();
+  auto bTCount = std::chrono::duration_cast<std::chrono::microseconds>(end-start);
+  std::cout << "Binary:  " << bTCount.count() << std::endl;
   mismoArreglo(A, B, n);
 
   /*
@@ -174,21 +211,18 @@ El ordenamiento por casilleros lo que hace es dividir la lista en cajitas con
   est ealgoritmo tiene un acomplejidad de O(n)
 */
 void bucket(int v[], const int n){
-  int m = 101;
+  int m = 1001;
   int cas[m];
   for(int i = 0; i < m ; i++){
     cas[i] = 0;
   }
-  for(int i = 0; i < n ; i++){
+  for(int i = 0; i < n ; ++i){
     ++cas[v[i]];
   }
   for (int i = 0, j = 0; j < m; ++j){
     for (int k = cas[j]; k > 0; --k){
       v[i++] = j;
     }
-  }
-  for(int i = 0; i < n; ++i){
-    std::cout << v[i] << std::endl;
   }
 }
 
@@ -237,18 +271,110 @@ void mergeSort(int v[], int l, int n, int N){
     }
 }
 
-
 /*
 Binary tree Sort
 */
+struct Node {
+  int val;
+  Node* left;
+  Node* right;
+
+  Node(int n) {
+      val = n;
+      left = right = nullptr;
+  }
+
+  static void destroy(Node* node) {
+      if (node) {
+          destroy(node->left);
+          destroy(node->right);
+          delete node;
+      }
+  }
+};
+void insert(Node*& node, int val){
+  if (!node)
+      node = new Node(val);
+  else if (val < node->val)
+      insert(node->left, val);
+  else
+      insert(node->right, val);
+}
+void inOrder(Node* node, std::vector<int>& a){
+  if (node) {
+      inOrder(node->left, a);
+      a.push_back(node->val);
+      inOrder(node->right, a);
+  }
+}
+void binarySort(int a[], int N){
+  Node* root = nullptr;
+  for (int i = 0; i < N; ++i)
+      insert(root, a[i]);
+
+  std::vector<int> aux;
+  inOrder(root, aux);
+
+  Node::destroy(root);
+
+  for (int i = 0; i < aux.size(); ++i)
+      a[i] = aux[i];
+}
 
 /*
-Radix Sort
+Radix Sort ordena de atras para adelante y en numeros binarios, osea si esta el
+  25 primero revisa el 5 y luego el 2, entonces el 25 lo pone en la casilla del
+  5 y luego revisa el 2
 */
+int getMax(int v[], int N){
+  int max = v[0];
+  for(int i=1; i<N; i++){
+    if(v[i]>max){
+      max = v[i];
+    }
+  }
+  return max;
+}
+void countSort(int v[], int N, int exp){
+  int output[N];
+  int count[10] = {0};
+  for(int i=0; i<N; i++){
+    count[(v[i]/exp)%10]++;
+  }
+  for(int i=1; i<10;i++){
+    count[i]+=count[i-1];
+  }
+  for (int i = N-1; i>=0; i--){
+    output[count[( v[i]/exp ) %10 ] -1] = v[i];
+    count[(v[i]/exp)%10]--;
+  }
+  for(int i=0;i<N; i++){
+    v[i]=output[i];
+  }
+}
+void radix(int v[], int N){
+  int m = getMax(v, N);
+  for(int exp = 1; m/exp>0; exp*=10){
+      countSort(v, N, exp);
+  }
+}
 
 /*
-Shell Sort
+Shell Sort, el metodo es muy similar al ordenamiento por insercion, pero en vez
+  de ordenar todos al mismo tiempo, lo vivide en columnas y ordena cada una
 */
+void shell(int v[], int N){
+  int temp;
+  for(int gap= N/2; gap>0; gap/=2){
+    for(int i=gap; i<N; i++){
+      for(int j=i-gap; j>=0 && v[j]>v[j+gap]; j-=gap){
+        temp = v[j];
+        v[j]= v[j+gap];
+        v[j+gap] = temp;
+      }
+    }
+  }
+}
 
 /*
 Selection Sort busca el minimo de la lista y lo compara con el primero
@@ -339,8 +465,6 @@ void quicksort(int v[], int primero, int ultimo){
         quicksort ( v, izquierdo, ultimo);
     }
 }
-
-
 
 
 void findMinMax( int* arr, int len, int& mi, int& mx ){
