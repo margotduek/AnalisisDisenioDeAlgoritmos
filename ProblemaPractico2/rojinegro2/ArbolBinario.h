@@ -1,84 +1,84 @@
 
 #include <iostream>
-#include "NodoB.h"
+#include "BNode.h"
 
 template <class T>
-class ArbolBinario
+class BiTree
 {
-    NodoB<T> * raiz = nullptr;
+    BNode<T> * raiz = nullptr;
 
-    std::ostream& imprime(std::ostream& os, NodoB<T> * nodo);
+    std::ostream& imprime(std::ostream& os, BNode<T> * nodo);
 
 public:
-    ArbolBinario();
-    ArbolBinario(NodoB<T> * info);
+    BiTree();
+    BiTree(BNode<T> * info);
 
-    ~ArbolBinario();
+    ~BiTree();
     void clear();
-    void clear(NodoB<T> * nodo);
+    void clear(BNode<T> * nodo);
 
     bool empty();
-    NodoB<T> * getRaiz();
-    void setRaiz(NodoB<T> * nodo)
+    BNode<T> * getRaiz();
+    void setRaiz(BNode<T> * nodo)
     {
         raiz = nodo;
     }
-    bool insert(T value, NodoB<T> * padre);
+    bool insert(T value, BNode<T> * padre);
 
     void preOrden();
-    void preOrden(NodoB<T> * nodo);
-    void preOrden(NodoB<T> * nodo, T info);
+    void preOrden(BNode<T> * nodo);
+    void preOrden(BNode<T> * nodo, T info);
 
     void inOrden();
-    void inOrden(NodoB<T> * nodo);
+    void inOrden(BNode<T> * nodo);
 
     void postOrden();
-    void postOrden(NodoB<T> * nodo);
+    void postOrden(BNode<T> * nodo);
 
     template <typename Tn>
-    friend std::ostream& operator<<(std::ostream& os, ArbolBinario<Tn> &arbol);
+    friend std::ostream& operator<<(std::ostream& os, BiTree<Tn> &arbol);
 
-    int nivel(NodoB<T> * nodo);
+    int nivel(BNode<T> * nodo);
 
-    NodoB<T> * suma_ineficiente();
-    NodoB<T> * suma_ineficiente(NodoB<T> * nodo);
+    BNode<T> * suma_ineficiente();
+    BNode<T> * suma_ineficiente(BNode<T> * nodo);
     T suma();
-    T suma_eficiente(NodoB<T> * nodo);
-    void suma_eficiente(NodoB<T> * nodo, NodoB<T> * acumulador);
-    T suma(NodoB<T> * nodo);
+    T suma_eficiente(BNode<T> * nodo);
+    void suma_eficiente(BNode<T> * nodo, BNode<T> * acumulador);
+    T suma(BNode<T> * nodo);
 
-    NodoB<T> * getPadre(T info);
-    void hermanos(NodoB<T> * n1);
+    BNode<T> * getPadre(T info);
+    void hermanos(BNode<T> * n1);
     bool sonHermanos(T n1, T n2);
-    bool sonHermanos(NodoB<T> * n1, NodoB<T> * n2);
+    bool sonHermanos(BNode<T> * n1, BNode<T> * n2);
 
-    void primosHermanos(NodoB<T> * nodo, NodoB<T> * raiz);
-    void ancestros(NodoB<T> *nodo);
+    void primosHermanos(BNode<T> * nodo, BNode<T> * raiz);
+    void ancestros(BNode<T> *nodo);
 
-    NodoB<T> * buscar (T info);
-    NodoB<T> * buscar (T info, NodoB<T> * nodo);
+    BNode<T> * buscar (T info);
+    BNode<T> * buscar (T info, BNode<T> * nodo);
 };
 
 template <class T>
-ArbolBinario<T>::ArbolBinario() { }
+BiTree<T>::BiTree() { }
 
 template <class T>
-ArbolBinario<T>::ArbolBinario(NodoB<T> * info) {
+BiTree<T>::BiTree(BNode<T> * info) {
     raiz = info;
 }
 
 template <class T>
-ArbolBinario<T>::~ArbolBinario() {
+BiTree<T>::~BiTree() {
     clear(raiz);
 }
 
 template <class T>
-void ArbolBinario<T>::clear() {
+void BiTree<T>::clear() {
     clear(raiz);
 }
 
 template <class T>
-void ArbolBinario<T>::clear(NodoB<T> * nodo) {
+void BiTree<T>::clear(BNode<T> * nodo) {
     if (nodo) {
         clear(nodo->getIzquierdo());
         clear(nodo->getDerecho());
@@ -89,28 +89,28 @@ void ArbolBinario<T>::clear(NodoB<T> * nodo) {
 }
 
 template <class T>
-bool ArbolBinario<T>::empty() {
+bool BiTree<T>::empty() {
     return (raiz == nullptr);
 }
 
 template <class T>
-NodoB<T> * ArbolBinario<T>::getRaiz() {
+BNode<T> * BiTree<T>::getRaiz() {
     return raiz;
 }
 
 template <class T>
-bool ArbolBinario<T>::insert(T value, NodoB<T> * padre) {
+bool BiTree<T>::insert(T value, BNode<T> * padre) {
     // Insertar la raiz
     if (!padre)
-        raiz = new NodoB<T>(value);
+        raiz = new BNode<T>(value);
     else {
         if (!padre->getIzquierdo()) {
-            NodoB<T> * nuevo = new NodoB<T>(value);
+            BNode<T> * nuevo = new BNode<T>(value);
             nuevo->setPadre(padre);
             padre->setIzquierdo(nuevo);
         }
         else if (!padre->getDerecho()) {
-            NodoB<T> * nuevo = new NodoB<T>(value);
+            BNode<T> * nuevo = new BNode<T>(value);
             nuevo->setPadre(padre);
             padre->setDerecho(nuevo);
         }
@@ -121,12 +121,12 @@ bool ArbolBinario<T>::insert(T value, NodoB<T> * padre) {
 }
 
 template <class T>
-void ArbolBinario<T>::preOrden() {
+void BiTree<T>::preOrden() {
     preOrden(raiz);
 }
 //this used to be
 template <class T>
-void ArbolBinario<T>::preOrden(NodoB<T> * nodo) {
+void BiTree<T>::preOrden(BNode<T> * nodo) {
     if (nodo) {
         std::cout << *nodo << std::endl;
         preOrden(nodo->getIzquierdo());
@@ -135,7 +135,7 @@ void ArbolBinario<T>::preOrden(NodoB<T> * nodo) {
 }
 
 template <class T>
-void ArbolBinario<T>::preOrden(NodoB<T> * nodo, T info) {
+void BiTree<T>::preOrden(BNode<T> * nodo, T info) {
     if (nodo) {
         if (!(nodo->getInfo() == info))
             std::cout << *nodo->getInfo() << std::endl;
@@ -145,12 +145,12 @@ void ArbolBinario<T>::preOrden(NodoB<T> * nodo, T info) {
 }
 
 template <class T>
-void ArbolBinario<T>::inOrden() {
+void BiTree<T>::inOrden() {
     inOrden(raiz);
 }
 
 template <class T>
-void ArbolBinario<T>::inOrden(NodoB<T> * nodo) {
+void BiTree<T>::inOrden(BNode<T> * nodo) {
     if (nodo) {
         inOrden(nodo->getIzquierdo());
         std::cout << *nodo << " " <<nodo->getColor()<<" ";
@@ -159,12 +159,12 @@ void ArbolBinario<T>::inOrden(NodoB<T> * nodo) {
 }
 
 template <class T>
-void ArbolBinario<T>::postOrden() {
+void BiTree<T>::postOrden() {
     postOrden(raiz);
 }
 
 template <class T>
-void ArbolBinario<T>::postOrden(NodoB<T> * nodo) {
+void BiTree<T>::postOrden(BNode<T> * nodo) {
     if (nodo) {
         postOrden(nodo->getIzquierdo());
         postOrden(nodo->getDerecho());
@@ -173,11 +173,11 @@ void ArbolBinario<T>::postOrden(NodoB<T> * nodo) {
 }
 
 template <class T>
-int ArbolBinario<T>::nivel(NodoB<T> *nodo) {
+int BiTree<T>::nivel(BNode<T> *nodo) {
     if (nodo == nullptr)
         return 0;
 
-    NodoB<T> * aux = nodo;
+    BNode<T> * aux = nodo;
     int nivel = 1;
     while (aux->getPadre()) {
         ++nivel;
@@ -188,15 +188,15 @@ int ArbolBinario<T>::nivel(NodoB<T> *nodo) {
 
 
 template <class T>
-NodoB<T> * ArbolBinario<T>::buscar(T info)
+BNode<T> * BiTree<T>::buscar(T info)
 {
     return buscar(info, raiz);
 }
 
 template <class T>
-NodoB<T> * ArbolBinario<T>::buscar(T info, NodoB<T> * node)
+BNode<T> * BiTree<T>::buscar(T info, BNode<T> * node)
 {
-//    NodoB<T> * encontrado = nullptr;
+//    BNode<T> * encontrado = nullptr;
 //
 //    if (nodo) {
 //        if (nodo->getInfo() == info) {
@@ -241,15 +241,15 @@ NodoB<T> * ArbolBinario<T>::buscar(T info, NodoB<T> * node)
 }
 
 template <class T>
-NodoB<T> * ArbolBinario<T>::getPadre(T info) {
-    NodoB<T> * nodo = buscar(info);
+BNode<T> * BiTree<T>::getPadre(T info) {
+    BNode<T> * nodo = buscar(info);
     return nodo->getPadre();
 }
 
 template <class T>
-void ArbolBinario<T>::hermanos(NodoB<T> * nodo) {
-    NodoB<T> * izquierdo = nodo->getPadre()->getIzquierdo();
-    NodoB<T> * derercho = nodo->getPadre()->getDerecho();
+void BiTree<T>::hermanos(BNode<T> * nodo) {
+    BNode<T> * izquierdo = nodo->getPadre()->getIzquierdo();
+    BNode<T> * derercho = nodo->getPadre()->getDerecho();
     if (izquierdo && izquierdo != nodo)
         std::cout << *izquierdo->getInfo();
     if (derercho && derercho != nodo)
@@ -257,19 +257,19 @@ void ArbolBinario<T>::hermanos(NodoB<T> * nodo) {
 }
 
 template <class T>
-bool ArbolBinario<T>::sonHermanos(T n1, T n2) {
+bool BiTree<T>::sonHermanos(T n1, T n2) {
     return sonHermanos(buscar(n1), buscar(n2));
 }
 
 template <class T>
-bool ArbolBinario<T>::sonHermanos(NodoB<T> * n1, NodoB<T> * n2) {
+bool BiTree<T>::sonHermanos(BNode<T> * n1, BNode<T> * n2) {
     if (n1 == nullptr || n2 == nullptr || n1 == n2)
         return false;
     return (n1->getPadre() == n2->getPadre());
 }
 
 template <class T>
-void ArbolBinario<T>::primosHermanos(NodoB<T> *nodo, NodoB<T> *raiz) {
+void BiTree<T>::primosHermanos(BNode<T> *nodo, BNode<T> *raiz) {
     if (raiz) {
         if (nivel(nodo) == nivel(raiz) && sonHermanos(nodo->getPadre(), raiz->getPadre())) {
             std::cout << *raiz->getInfo() << std::endl;
@@ -280,8 +280,8 @@ void ArbolBinario<T>::primosHermanos(NodoB<T> *nodo, NodoB<T> *raiz) {
 }
 
 template <class T>
-void ArbolBinario<T>::ancestros(NodoB<T> *nodo) {
-    NodoB<T> * padre = nodo->getPadre();
+void BiTree<T>::ancestros(BNode<T> *nodo) {
+    BNode<T> * padre = nodo->getPadre();
     while (padre) {
         std::cout << *padre->getInfo() << std::endl;
         padre = padre->getPadre();
@@ -289,34 +289,34 @@ void ArbolBinario<T>::ancestros(NodoB<T> *nodo) {
 }
 
 template <class T>
-NodoB<T> * ArbolBinario<T>::suma_ineficiente() {
+BNode<T> * BiTree<T>::suma_ineficiente() {
     return suma_ineficiente(raiz);
 }
 
 template <class T>
-NodoB<T> * ArbolBinario<T>::suma_ineficiente(NodoB<T> * nodo) {
+BNode<T> * BiTree<T>::suma_ineficiente(BNode<T> * nodo) {
     T valor;
     if (nodo) {
         valor = nodo->getInfo();
-        NodoB<T> * suma_ineficiente_izq = suma_ineficiente(nodo->getIzquierdo());
+        BNode<T> * suma_ineficiente_izq = suma_ineficiente(nodo->getIzquierdo());
         if (suma_ineficiente_izq) {
             valor += suma_ineficiente_izq->getInfo();
             delete suma_ineficiente_izq;
         }
 
-        NodoB<T> * suma_ineficiente_der = suma_ineficiente(nodo->getDerecho());
+        BNode<T> * suma_ineficiente_der = suma_ineficiente(nodo->getDerecho());
         if (suma_ineficiente_der) {
             valor += suma_ineficiente_der->getInfo();
             delete suma_ineficiente_der;
         }
-        return new NodoB<T>(valor);
+        return new BNode<T>(valor);
     }
     return nullptr;
 }
 
 template <class T>
-T ArbolBinario<T>::suma_eficiente(NodoB<T> * nodo) {
-    NodoB<T> * acumulador = new NodoB<T>(0);
+T BiTree<T>::suma_eficiente(BNode<T> * nodo) {
+    BNode<T> * acumulador = new BNode<T>(0);
     suma_eficiente(nodo, acumulador);
     T valor = acumulador->getInfo();
     delete acumulador;
@@ -324,7 +324,7 @@ T ArbolBinario<T>::suma_eficiente(NodoB<T> * nodo) {
 }
 
 template <class T>
-void ArbolBinario<T>::suma_eficiente(NodoB<T> * nodo, NodoB<T> * acumulador) {
+void BiTree<T>::suma_eficiente(BNode<T> * nodo, BNode<T> * acumulador) {
     if (nodo) {
         acumulador->setInfo(acumulador->getInfo() + nodo->getInfo());
         suma_eficiente(nodo->getIzquierdo(), acumulador);
@@ -333,12 +333,12 @@ void ArbolBinario<T>::suma_eficiente(NodoB<T> * nodo, NodoB<T> * acumulador) {
 }
 
 template <class T>
-T ArbolBinario<T>::suma() {
+T BiTree<T>::suma() {
     return suma(raiz);
 }
 
 template <class T>
-T ArbolBinario<T>::suma(NodoB<T> *nodo) {
+T BiTree<T>::suma(BNode<T> *nodo) {
     static T valor;
     if (nodo) {
         valor += nodo->getInfo();
@@ -349,7 +349,7 @@ T ArbolBinario<T>::suma(NodoB<T> *nodo) {
 }
 
 template <class T>
-std::ostream& ArbolBinario<T>::imprime(std::ostream& os, NodoB<T> * nodo) {
+std::ostream& BiTree<T>::imprime(std::ostream& os, BNode<T> * nodo) {
     if (nodo) {
         os << *nodo;
         imprime(os, nodo->getIzquierdo());
@@ -359,6 +359,6 @@ std::ostream& ArbolBinario<T>::imprime(std::ostream& os, NodoB<T> * nodo) {
 }
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, ArbolBinario<T> &arbol) {
+std::ostream& operator<<(std::ostream& os, BiTree<T> &arbol) {
     return arbol.imprime(os, arbol.raiz);
 }

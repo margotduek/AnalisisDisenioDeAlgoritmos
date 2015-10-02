@@ -1,10 +1,10 @@
 #include <iostream>
-#include "Rojinegro.h"
+#include "RBTree.h"
 
 // This function tests the example at Kruse's textbook.
 // Makes a BTree of order 5 representation of the English alphabet.
 int main(int argc, const char * argv[]){
-  Rojinegro<int> * tree = new Rojinegro<int>();
+  RBTree<int> * tree = new RBTree<int>();
 
   tree->RBinsert(1);
   tree->RBinsert(5);
