@@ -5,7 +5,7 @@ template<class T>
 class ArbolBinarioBusqueda : public BiTree<T>{
 public:
     ArbolBinarioBusqueda();
-    virtual BNode<T>* insertar(T valor);
+    virtual BRBNode<T>* insertar(T valor);
     void removeNodo(T valor);
     void print();
 };
@@ -16,9 +16,9 @@ ArbolBinarioBusqueda<T>::ArbolBinarioBusqueda() : BiTree<T>(){
 }
 
 template<class T>
-BNode<T>* ArbolBinarioBusqueda<T>::insertar(T valor){
-    BNode<T> * nodo = new BNode<T>(valor);
-    BNode<T> * padre;
+BRBNode<T>* ArbolBinarioBusqueda<T>::insertar(T valor){
+    BRBNode<T> * nodo = new BRBNode<T>(valor);
+    BRBNode<T> * padre;
 
     nodo->setDerecho(nullptr);
     nodo->setIzquierdo(nullptr);
@@ -26,11 +26,11 @@ BNode<T>* ArbolBinarioBusqueda<T>::insertar(T valor){
     padre = nodo->getPadre();
 
     if(this->empty()){
-        //BNode<T> * raiz = this->getRaiz();
+        //BRBNode<T> * raiz = this->getRaiz();
         this->setRaiz(nodo);
     }
     else{
-        BNode<T> * actual = new BNode<T>();
+        BRBNode<T> * actual = new BRBNode<T>();
 
         actual = this->getRaiz();
 
@@ -59,14 +59,14 @@ BNode<T>* ArbolBinarioBusqueda<T>::insertar(T valor){
 
 template<class T>
 void ArbolBinarioBusqueda<T>::removeNodo(T valor){
-    BNode<T> * root = this->getRaiz();
+    BRBNode<T> * root = this->getRaiz();
 
     if(this->empty()){
         return;
     }
 
-    BNode<T> * actual = root;
-    BNode<T> * parent;
+    BRBNode<T> * actual = root;
+    BRBNode<T> * parent;
 
     // root to leaf search (top-down)
     while(actual){
@@ -115,15 +115,15 @@ void ArbolBinarioBusqueda<T>::removeNodo(T valor){
     }
 
     if (actual->getIzquierdo() != nullptr and actual->getDerecho() != nullptr) {
-        BNode<T> *actual_right = actual->getDerecho();
+        BRBNode<T> *actual_right = actual->getDerecho();
         if(actual_right->getIzquierdo() == nullptr and actual_right->getDerecho() == nullptr) {
             actual->setInfo(actual_right->getInfo());
             delete actual_right;
             actual->setDerecho(nullptr);
         } else {
             if((actual->getDerecho())->getIzquierdo() != nullptr) {
-                BNode<T>* lactual;
-                BNode<T>* lactual_parent;
+                BRBNode<T>* lactual;
+                BRBNode<T>* lactual_parent;
                 lactual_parent = actual->getDerecho();
                 lactual = (actual->getDerecho())->getIzquierdo();
                 while(lactual->getIzquierdo() != nullptr) {
@@ -134,7 +134,7 @@ void ArbolBinarioBusqueda<T>::removeNodo(T valor){
                 delete lactual;
                 lactual_parent->setIzquierdo(nullptr);
             } else { // (actual->right)->right != nullptr
-                BNode<T> *tmp = actual->getDerecho();
+                BRBNode<T> *tmp = actual->getDerecho();
                 actual->setInfo(tmp->getInfo());
                 actual->setDerecho(tmp->getDerecho());
                 delete tmp;

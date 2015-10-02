@@ -8,40 +8,40 @@ class RBTree : public ArbolBinarioBusqueda<T>{
 public:
     RBTree();
 
-    BNode<T> * grandparent(BNode<T> * nodo);
-    BNode<T> * uncle(BNode<T> * nodo);
-    BNode<T> * sibling(BNode<T> * nodo);
+    BRBNode<T> * grandparent(BRBNode<T> * nodo);
+    BRBNode<T> * uncle(BRBNode<T> * nodo);
+    BRBNode<T> * sibling(BRBNode<T> * nodo);
 
-    BNode<T> * maximum_node(BNode<T> * nodo);
+    BRBNode<T> * maximum_node(BRBNode<T> * nodo);
 
     void verifyProperties(RBTree * arbol);
-    void revisaa(BNode<T> * nodo);
-    void resab(BNode<T> * nodo);
-    void revisac(BNode<T> * nodo);
-    void revisad(BNode<T> * root);
-    void verifyProperty4Helper(BNode<T> * nodo, int contNegros, int& blackPath);
+    void revisaa(BRBNode<T> * nodo);
+    void resab(BRBNode<T> * nodo);
+    void revisac(BRBNode<T> * nodo);
+    void revisad(BRBNode<T> * root);
+    void verifyProperty4Helper(BRBNode<T> * nodo, int contNegros, int& blackPath);
 
-    std::string color(BNode<T> * nodo);
+    std::string color(BRBNode<T> * nodo);
 
-    void rotateLeft(RBTree * arbol, BNode<T> * nodo);
-    void rotateRight(RBTree * arbol, BNode<T> * nodo);
+    void rotateLeft(RBTree * arbol, BRBNode<T> * nodo);
+    void rotateRight(RBTree * arbol, BRBNode<T> * nodo);
 
     void RBinsert(T valor);
-    void insertCase1(RBTree * arbol, BNode<T> * nodo);
-    void insertCase2(RBTree * arbol, BNode<T> * nodo);
-    void insertCase3(RBTree * arbol, BNode<T> * nodo);
-    void insertCase4(RBTree * arbol, BNode<T> * nodo);
-    void insertCase5(RBTree * arbol, BNode<T> * nodo);
+    void insertCase1(RBTree * arbol, BRBNode<T> * nodo);
+    void insertCase2(RBTree * arbol, BRBNode<T> * nodo);
+    void insertCase3(RBTree * arbol, BRBNode<T> * nodo);
+    void insertCase4(RBTree * arbol, BRBNode<T> * nodo);
+    void insertCase5(RBTree * arbol, BRBNode<T> * nodo);
 
     void RBdelete(T valor);
-    void deleteCase1(RBTree * arbol, BNode<T> * nodo);
-    void deleteCase2(RBTree * arbol, BNode<T> * nodo);
-    void deleteCase3(RBTree * arbol, BNode<T> * nodo);
-    void deleteCase4(RBTree * arbol, BNode<T> * nodo);
-    void deleteCase5(RBTree * arbol, BNode<T> * nodo);
-    void deleteCase6(RBTree * arbol, BNode<T> * nodo);
+    void deleteCase1(RBTree * arbol, BRBNode<T> * nodo);
+    void deleteCase2(RBTree * arbol, BRBNode<T> * nodo);
+    void deleteCase3(RBTree * arbol, BRBNode<T> * nodo);
+    void deleteCase4(RBTree * arbol, BRBNode<T> * nodo);
+    void deleteCase5(RBTree * arbol, BRBNode<T> * nodo);
+    void deleteCase6(RBTree * arbol, BRBNode<T> * nodo);
 
-    void prettyPrint(BNode<T>* p, int indent);
+    void prettyPrint(BRBNode<T>* p, int indent);
 
     void verificarArbol(RBTree<T> * arbol);
 };
@@ -50,7 +50,7 @@ template<class T>
 RBTree<T>::RBTree() : ArbolBinarioBusqueda<T>() {}
 
 template<class T>
-BNode<T> * RBTree<T>::grandparent(BNode<T> * nodo){
+BRBNode<T> * RBTree<T>::grandparent(BRBNode<T> * nodo){
     if(nodo != nullptr && nodo->getPadre() != nullptr)
         return nodo->getPadre()->getPadre();
     else
@@ -58,8 +58,8 @@ BNode<T> * RBTree<T>::grandparent(BNode<T> * nodo){
 }
 
 template<class T>
-BNode<T> * RBTree<T>::uncle(BNode<T> * nodo){
-    BNode<T> * abuelo = grandparent(nodo);
+BRBNode<T> * RBTree<T>::uncle(BRBNode<T> * nodo){
+    BRBNode<T> * abuelo = grandparent(nodo);
 
     if(abuelo == nullptr)
         return nullptr;
@@ -70,7 +70,7 @@ BNode<T> * RBTree<T>::uncle(BNode<T> * nodo){
 }
 
 template<class T>
-BNode<T> * RBTree<T>::sibling(BNode<T> * nodo){
+BRBNode<T> * RBTree<T>::sibling(BRBNode<T> * nodo){
     if(nodo != nullptr && nodo->getPadre() != nullptr){
         if(nodo == nodo->getPadre()->getIzquierdo())
             return nodo->getPadre()->getDerecho();
@@ -82,7 +82,7 @@ BNode<T> * RBTree<T>::sibling(BNode<T> * nodo){
 }
 
 template<class T>
-BNode<T> * RBTree<T>::maximum_node(BNode<T> * nodo){
+BRBNode<T> * RBTree<T>::maximum_node(BRBNode<T> * nodo){
     assert(nodo != nullptr);
     while(nodo->getDerecho() != nullptr)
     {
@@ -100,7 +100,7 @@ void RBTree<T>::verifyProperties(RBTree * arbol){
 }
 
 template<class T>
-void RBTree<T>::revisaa(BNode<T> * nodo){
+void RBTree<T>::revisaa(BRBNode<T> * nodo){
     if(nodo == nullptr)
         return;
 
@@ -111,12 +111,12 @@ void RBTree<T>::revisaa(BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::resab(BNode<T> * nodo){
+void RBTree<T>::resab(BRBNode<T> * nodo){
     assert(color(nodo) == "negro");
 }
 
 template<class T>
-void RBTree<T>::revisac(BNode<T> * nodo){
+void RBTree<T>::revisac(BRBNode<T> * nodo){
     if (nodo == nullptr)
         return;
 
@@ -131,7 +131,7 @@ void RBTree<T>::revisac(BNode<T> * nodo){
 }
 
 template <class T>
-void RBTree<T>::revisad(BNode<T> * root){
+void RBTree<T>::revisad(BRBNode<T> * root){
 
     int blackPath = -1;
     std::string mensaje="";
@@ -140,7 +140,7 @@ void RBTree<T>::revisad(BNode<T> * root){
 }
 
 template <class T>
-void RBTree<T>::verifyProperty4Helper(BNode<T> * nodo, int contNegros, int& blackPath){
+void RBTree<T>::verifyProperty4Helper(BRBNode<T> * nodo, int contNegros, int& blackPath){
     std::string color;
 
 
@@ -172,7 +172,7 @@ void RBTree<T>::verifyProperty4Helper(BNode<T> * nodo, int contNegros, int& blac
 }
 
 template<class T>
-std::string RBTree<T>::color(BNode<T> * nodo){
+std::string RBTree<T>::color(BRBNode<T> * nodo){
     if(nodo == nullptr)
         return "negro";
     else
@@ -180,8 +180,8 @@ std::string RBTree<T>::color(BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::rotateLeft(RBTree * arbol, BNode<T> * nodoX){
-    BNode<T> * nodoY;
+void RBTree<T>::rotateLeft(RBTree * arbol, BRBNode<T> * nodoX){
+    BRBNode<T> * nodoY;
 
     if(nodoX->getDerecho() == nullptr){
         return;
@@ -212,8 +212,8 @@ void RBTree<T>::rotateLeft(RBTree * arbol, BNode<T> * nodoX){
 }
 
 template<class T>
-void RBTree<T>::rotateRight(RBTree * arbol, BNode<T> * nodoY){
-    BNode<T> *nodoX;
+void RBTree<T>::rotateRight(RBTree * arbol, BRBNode<T> * nodoY){
+    BRBNode<T> *nodoX;
 
     if(nodoY->getIzquierdo() == nullptr){
         return;
@@ -245,7 +245,7 @@ void RBTree<T>::rotateRight(RBTree * arbol, BNode<T> * nodoY){
 
 template<class T>
 void RBTree<T>::RBinsert(T valor){
-    BNode<T> * nodo = this->insertar(valor);
+    BRBNode<T> * nodo = this->insertar(valor);
     nodo->setColor("rojo");
     insertCase1(this, nodo);
     verifyProperties(this);
@@ -253,7 +253,7 @@ void RBTree<T>::RBinsert(T valor){
 }
 
 template<class T>
-void RBTree<T>::insertCase1(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::insertCase1(RBTree * arbol, BRBNode<T> * nodo){
     if(nodo->getPadre() == nullptr)
         nodo->setColor("negro");
     else
@@ -261,7 +261,7 @@ void RBTree<T>::insertCase1(RBTree * arbol, BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::insertCase2(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::insertCase2(RBTree * arbol, BRBNode<T> * nodo){
     if(nodo->getPadre()->getColor() == "negro")
         return;
     else
@@ -269,7 +269,7 @@ void RBTree<T>::insertCase2(RBTree * arbol, BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::insertCase3(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::insertCase3(RBTree * arbol, BRBNode<T> * nodo){
     if(color(uncle(nodo)) == "rojo"){
         nodo->getPadre()->setColor("negro");
         uncle(nodo)->setColor("negro");
@@ -282,7 +282,7 @@ void RBTree<T>::insertCase3(RBTree * arbol, BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::insertCase4(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::insertCase4(RBTree * arbol, BRBNode<T> * nodo){
     if(nodo == nodo->getPadre()->getDerecho() && nodo->getPadre() == grandparent(nodo)->getIzquierdo())
     {
         rotateLeft(arbol, nodo->getPadre());
@@ -297,7 +297,7 @@ void RBTree<T>::insertCase4(RBTree * arbol, BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::insertCase5(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::insertCase5(RBTree * arbol, BRBNode<T> * nodo){
     nodo->getPadre()->setColor("negro");
     grandparent(nodo)->setColor("rojo");
     if (nodo == nodo->getPadre()->getIzquierdo() && nodo->getPadre() == grandparent(nodo)->getIzquierdo())
@@ -313,14 +313,14 @@ void RBTree<T>::insertCase5(RBTree * arbol, BNode<T> * nodo){
 template <class T>
 void RBTree<T>::RBdelete(T valor)
 {
-    BNode<T> * hijo;
-    BNode<T> * nodo;
+    BRBNode<T> * hijo;
+    BRBNode<T> * nodo;
     nodo = this->buscar(valor);
     if (nodo == nullptr)
         return;
 
     if (nodo->getIzquierdo() != nullptr && nodo->getDerecho() != nullptr){
-        BNode<T> * pred = maximum_node(nodo->getIzquierdo());
+        BRBNode<T> * pred = maximum_node(nodo->getIzquierdo());
         nodo->setInfo(pred->getInfo());
         nodo = pred;
     }
@@ -349,7 +349,7 @@ void RBTree<T>::RBdelete(T valor)
 }
 
 template <class T>
-void RBTree<T>::deleteCase1(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::deleteCase1(RBTree * arbol, BRBNode<T> * nodo){
     if(nodo->getPadre() == nullptr)
         return;
     else
@@ -357,7 +357,7 @@ void RBTree<T>::deleteCase1(RBTree * arbol, BNode<T> * nodo){
 }
 
 template <class T>
-void RBTree<T>::deleteCase2(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::deleteCase2(RBTree * arbol, BRBNode<T> * nodo){
     if (color(sibling(nodo)) == "rojo")
     {
         nodo->getPadre()->setColor("rojo");
@@ -371,7 +371,7 @@ void RBTree<T>::deleteCase2(RBTree * arbol, BNode<T> * nodo){
 }
 
 template <class T>
-void RBTree<T>::deleteCase3(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::deleteCase3(RBTree * arbol, BRBNode<T> * nodo){
     if (color(nodo->getPadre()) == "negro" && color(sibling(nodo)) == "negro" &&
         color(sibling(nodo)->getIzquierdo()) == "negro" && color(sibling(nodo)->getDerecho()) == "negro")
     {
@@ -383,7 +383,7 @@ void RBTree<T>::deleteCase3(RBTree * arbol, BNode<T> * nodo){
 }
 
 template <class T>
-void RBTree<T>::deleteCase4(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::deleteCase4(RBTree * arbol, BRBNode<T> * nodo){
     if (color(nodo->getPadre()) == "rojo" && color(sibling(nodo)) == "negro" &&
         color(sibling(nodo)->getIzquierdo()) == "negro" && color(sibling(nodo)->getDerecho()) == "negro")
     {
@@ -395,7 +395,7 @@ void RBTree<T>::deleteCase4(RBTree * arbol, BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::deleteCase5(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::deleteCase5(RBTree * arbol, BRBNode<T> * nodo){
     if (nodo == nodo->getPadre()->getIzquierdo() && color(sibling(nodo)) == "negro" &&
         color(sibling(nodo)->getIzquierdo()) == "rojo" && color(sibling(nodo)->getDerecho()) == "negro"){
         sibling(nodo)->setColor("rojo");
@@ -413,7 +413,7 @@ void RBTree<T>::deleteCase5(RBTree * arbol, BNode<T> * nodo){
 }
 
 template<class T>
-void RBTree<T>::deleteCase6(RBTree * arbol, BNode<T> * nodo){
+void RBTree<T>::deleteCase6(RBTree * arbol, BRBNode<T> * nodo){
     sibling(nodo)->setColor(color(nodo->getPadre()));
     nodo->getPadre()->setColor("negro");
     if (nodo == nodo->getPadre()->getIzquierdo()){
@@ -429,7 +429,7 @@ void RBTree<T>::deleteCase6(RBTree * arbol, BNode<T> * nodo){
 }
 
 template <class T>
-void RBTree<T>::prettyPrint(BNode<T>* p, int indent){
+void RBTree<T>::prettyPrint(BRBNode<T>* p, int indent){
     if (p != nullptr) {
         if (p->getDerecho()) {
             prettyPrint(p->getDerecho(), indent + 4);

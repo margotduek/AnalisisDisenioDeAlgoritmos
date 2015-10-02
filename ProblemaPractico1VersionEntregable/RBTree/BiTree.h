@@ -1,66 +1,66 @@
 #include <iostream>
-#include "BNode.h"
+#include "BRBNode.h"
 
 template <class T>
 class BiTree{
-    BNode<T> * raiz = nullptr;
-    std::ostream& imprime(std::ostream& os, BNode<T> * nodo);
+    BRBNode<T> * raiz = nullptr;
+    std::ostream& imprime(std::ostream& os, BRBNode<T> * nodo);
 
 public:
     BiTree();
-    BiTree(BNode<T> * info);
+    BiTree(BRBNode<T> * info);
 
     ~BiTree();
     void clear();
-    void clear(BNode<T> * nodo);
+    void clear(BRBNode<T> * nodo);
 
     bool empty();
-    BNode<T> * getRaiz();
-    void setRaiz(BNode<T> * nodo)
+    BRBNode<T> * getRaiz();
+    void setRaiz(BRBNode<T> * nodo)
     {
         raiz = nodo;
     }
-    bool insert(T value, BNode<T> * padre);
+    bool insert(T value, BRBNode<T> * padre);
 
     void preOrden();
-    void preOrden(BNode<T> * nodo);
-    void preOrden(BNode<T> * nodo, T info);
+    void preOrden(BRBNode<T> * nodo);
+    void preOrden(BRBNode<T> * nodo, T info);
 
     void inOrden();
-    void inOrden(BNode<T> * nodo);
+    void inOrden(BRBNode<T> * nodo);
 
     void postOrden();
-    void postOrden(BNode<T> * nodo);
+    void postOrden(BRBNode<T> * nodo);
 
     template <typename Tn>
     friend std::ostream& operator<<(std::ostream& os, BiTree<Tn> &arbol);
 
-    int nivel(BNode<T> * nodo);
+    int nivel(BRBNode<T> * nodo);
 
-    BNode<T> * suma_ineficiente();
-    BNode<T> * suma_ineficiente(BNode<T> * nodo);
+    BRBNode<T> * suma_ineficiente();
+    BRBNode<T> * suma_ineficiente(BRBNode<T> * nodo);
     T suma();
-    T suma_eficiente(BNode<T> * nodo);
-    void suma_eficiente(BNode<T> * nodo, BNode<T> * acumulador);
-    T suma(BNode<T> * nodo);
+    T suma_eficiente(BRBNode<T> * nodo);
+    void suma_eficiente(BRBNode<T> * nodo, BRBNode<T> * acumulador);
+    T suma(BRBNode<T> * nodo);
 
-    BNode<T> * getPadre(T info);
-    void hermanos(BNode<T> * n1);
+    BRBNode<T> * getPadre(T info);
+    void hermanos(BRBNode<T> * n1);
     bool sonHermanos(T n1, T n2);
-    bool sonHermanos(BNode<T> * n1, BNode<T> * n2);
+    bool sonHermanos(BRBNode<T> * n1, BRBNode<T> * n2);
 
-    void primosHermanos(BNode<T> * nodo, BNode<T> * raiz);
-    void ancestros(BNode<T> *nodo);
+    void primosHermanos(BRBNode<T> * nodo, BRBNode<T> * raiz);
+    void ancestros(BRBNode<T> *nodo);
 
-    BNode<T> * buscar (T info);
-    BNode<T> * buscar (T info, BNode<T> * nodo);
+    BRBNode<T> * buscar (T info);
+    BRBNode<T> * buscar (T info, BRBNode<T> * nodo);
 };
 
 template <class T>
 BiTree<T>::BiTree() { }
 
 template <class T>
-BiTree<T>::BiTree(BNode<T> * info) {
+BiTree<T>::BiTree(BRBNode<T> * info) {
     raiz = info;
 }
 
@@ -75,7 +75,7 @@ void BiTree<T>::clear() {
 }
 
 template <class T>
-void BiTree<T>::clear(BNode<T> * nodo) {
+void BiTree<T>::clear(BRBNode<T> * nodo) {
     if (nodo) {
         clear(nodo->getIzquierdo());
         clear(nodo->getDerecho());
@@ -91,23 +91,23 @@ bool BiTree<T>::empty() {
 }
 
 template <class T>
-BNode<T> * BiTree<T>::getRaiz() {
+BRBNode<T> * BiTree<T>::getRaiz() {
     return raiz;
 }
 
 template <class T>
-bool BiTree<T>::insert(T value, BNode<T> * padre) {
+bool BiTree<T>::insert(T value, BRBNode<T> * padre) {
     // Insertar la raiz
     if (!padre)
-        raiz = new BNode<T>(value);
+        raiz = new BRBNode<T>(value);
     else {
         if (!padre->getIzquierdo()) {
-            BNode<T> * nuevo = new BNode<T>(value);
+            BRBNode<T> * nuevo = new BRBNode<T>(value);
             nuevo->setPadre(padre);
             padre->setIzquierdo(nuevo);
         }
         else if (!padre->getDerecho()) {
-            BNode<T> * nuevo = new BNode<T>(value);
+            BRBNode<T> * nuevo = new BRBNode<T>(value);
             nuevo->setPadre(padre);
             padre->setDerecho(nuevo);
         }
@@ -123,7 +123,7 @@ void BiTree<T>::preOrden() {
 }
 //this used to be
 template <class T>
-void BiTree<T>::preOrden(BNode<T> * nodo) {
+void BiTree<T>::preOrden(BRBNode<T> * nodo) {
     if (nodo) {
         std::cout << *nodo << std::endl;
         preOrden(nodo->getIzquierdo());
@@ -132,7 +132,7 @@ void BiTree<T>::preOrden(BNode<T> * nodo) {
 }
 
 template <class T>
-void BiTree<T>::preOrden(BNode<T> * nodo, T info) {
+void BiTree<T>::preOrden(BRBNode<T> * nodo, T info) {
     if (nodo) {
         if (!(nodo->getInfo() == info))
             std::cout << *nodo->getInfo() << std::endl;
@@ -147,7 +147,7 @@ void BiTree<T>::inOrden() {
 }
 
 template <class T>
-void BiTree<T>::inOrden(BNode<T> * nodo) {
+void BiTree<T>::inOrden(BRBNode<T> * nodo) {
     if (nodo) {
         inOrden(nodo->getIzquierdo());
         std::cout << *nodo << " " <<nodo->getColor()<<" ";
@@ -161,7 +161,7 @@ void BiTree<T>::postOrden() {
 }
 
 template <class T>
-void BiTree<T>::postOrden(BNode<T> * nodo) {
+void BiTree<T>::postOrden(BRBNode<T> * nodo) {
     if (nodo) {
         postOrden(nodo->getIzquierdo());
         postOrden(nodo->getDerecho());
@@ -170,11 +170,11 @@ void BiTree<T>::postOrden(BNode<T> * nodo) {
 }
 
 template <class T>
-int BiTree<T>::nivel(BNode<T> *nodo) {
+int BiTree<T>::nivel(BRBNode<T> *nodo) {
     if (nodo == nullptr)
         return 0;
 
-    BNode<T> * aux = nodo;
+    BRBNode<T> * aux = nodo;
     int nivel = 1;
     while (aux->getPadre()) {
         ++nivel;
@@ -185,15 +185,15 @@ int BiTree<T>::nivel(BNode<T> *nodo) {
 
 
 template <class T>
-BNode<T> * BiTree<T>::buscar(T info)
+BRBNode<T> * BiTree<T>::buscar(T info)
 {
     return buscar(info, raiz);
 }
 
 template <class T>
-BNode<T> * BiTree<T>::buscar(T info, BNode<T> * node)
+BRBNode<T> * BiTree<T>::buscar(T info, BRBNode<T> * node)
 {
-//    BNode<T> * encontrado = nullptr;
+//    BRBNode<T> * encontrado = nullptr;
 //
 //    if (nodo) {
 //        if (nodo->getInfo() == info) {
@@ -238,15 +238,15 @@ BNode<T> * BiTree<T>::buscar(T info, BNode<T> * node)
 }
 
 template <class T>
-BNode<T> * BiTree<T>::getPadre(T info) {
-    BNode<T> * nodo = buscar(info);
+BRBNode<T> * BiTree<T>::getPadre(T info) {
+    BRBNode<T> * nodo = buscar(info);
     return nodo->getPadre();
 }
 
 template <class T>
-void BiTree<T>::hermanos(BNode<T> * nodo) {
-    BNode<T> * izquierdo = nodo->getPadre()->getIzquierdo();
-    BNode<T> * derercho = nodo->getPadre()->getDerecho();
+void BiTree<T>::hermanos(BRBNode<T> * nodo) {
+    BRBNode<T> * izquierdo = nodo->getPadre()->getIzquierdo();
+    BRBNode<T> * derercho = nodo->getPadre()->getDerecho();
     if (izquierdo && izquierdo != nodo)
         std::cout << *izquierdo->getInfo();
     if (derercho && derercho != nodo)
@@ -259,14 +259,14 @@ bool BiTree<T>::sonHermanos(T n1, T n2) {
 }
 
 template <class T>
-bool BiTree<T>::sonHermanos(BNode<T> * n1, BNode<T> * n2) {
+bool BiTree<T>::sonHermanos(BRBNode<T> * n1, BRBNode<T> * n2) {
     if (n1 == nullptr || n2 == nullptr || n1 == n2)
         return false;
     return (n1->getPadre() == n2->getPadre());
 }
 
 template <class T>
-void BiTree<T>::primosHermanos(BNode<T> *nodo, BNode<T> *raiz) {
+void BiTree<T>::primosHermanos(BRBNode<T> *nodo, BRBNode<T> *raiz) {
     if (raiz) {
         if (nivel(nodo) == nivel(raiz) && sonHermanos(nodo->getPadre(), raiz->getPadre())) {
             std::cout << *raiz->getInfo() << std::endl;
@@ -277,8 +277,8 @@ void BiTree<T>::primosHermanos(BNode<T> *nodo, BNode<T> *raiz) {
 }
 
 template <class T>
-void BiTree<T>::ancestros(BNode<T> *nodo) {
-    BNode<T> * padre = nodo->getPadre();
+void BiTree<T>::ancestros(BRBNode<T> *nodo) {
+    BRBNode<T> * padre = nodo->getPadre();
     while (padre) {
         std::cout << *padre->getInfo() << std::endl;
         padre = padre->getPadre();
@@ -286,34 +286,34 @@ void BiTree<T>::ancestros(BNode<T> *nodo) {
 }
 
 template <class T>
-BNode<T> * BiTree<T>::suma_ineficiente() {
+BRBNode<T> * BiTree<T>::suma_ineficiente() {
     return suma_ineficiente(raiz);
 }
 
 template <class T>
-BNode<T> * BiTree<T>::suma_ineficiente(BNode<T> * nodo) {
+BRBNode<T> * BiTree<T>::suma_ineficiente(BRBNode<T> * nodo) {
     T valor;
     if (nodo) {
         valor = nodo->getInfo();
-        BNode<T> * suma_ineficiente_izq = suma_ineficiente(nodo->getIzquierdo());
+        BRBNode<T> * suma_ineficiente_izq = suma_ineficiente(nodo->getIzquierdo());
         if (suma_ineficiente_izq) {
             valor += suma_ineficiente_izq->getInfo();
             delete suma_ineficiente_izq;
         }
 
-        BNode<T> * suma_ineficiente_der = suma_ineficiente(nodo->getDerecho());
+        BRBNode<T> * suma_ineficiente_der = suma_ineficiente(nodo->getDerecho());
         if (suma_ineficiente_der) {
             valor += suma_ineficiente_der->getInfo();
             delete suma_ineficiente_der;
         }
-        return new BNode<T>(valor);
+        return new BRBNode<T>(valor);
     }
     return nullptr;
 }
 
 template <class T>
-T BiTree<T>::suma_eficiente(BNode<T> * nodo) {
-    BNode<T> * acumulador = new BNode<T>(0);
+T BiTree<T>::suma_eficiente(BRBNode<T> * nodo) {
+    BRBNode<T> * acumulador = new BRBNode<T>(0);
     suma_eficiente(nodo, acumulador);
     T valor = acumulador->getInfo();
     delete acumulador;
@@ -321,7 +321,7 @@ T BiTree<T>::suma_eficiente(BNode<T> * nodo) {
 }
 
 template <class T>
-void BiTree<T>::suma_eficiente(BNode<T> * nodo, BNode<T> * acumulador) {
+void BiTree<T>::suma_eficiente(BRBNode<T> * nodo, BRBNode<T> * acumulador) {
     if (nodo) {
         acumulador->setInfo(acumulador->getInfo() + nodo->getInfo());
         suma_eficiente(nodo->getIzquierdo(), acumulador);
@@ -335,7 +335,7 @@ T BiTree<T>::suma() {
 }
 
 template <class T>
-T BiTree<T>::suma(BNode<T> *nodo) {
+T BiTree<T>::suma(BRBNode<T> *nodo) {
     static T valor;
     if (nodo) {
         valor += nodo->getInfo();
@@ -346,7 +346,7 @@ T BiTree<T>::suma(BNode<T> *nodo) {
 }
 
 template <class T>
-std::ostream& BiTree<T>::imprime(std::ostream& os, BNode<T> * nodo) {
+std::ostream& BiTree<T>::imprime(std::ostream& os, BRBNode<T> * nodo) {
     if (nodo) {
         os << *nodo;
         imprime(os, nodo->getIzquierdo());
