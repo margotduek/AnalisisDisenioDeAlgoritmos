@@ -21,7 +21,7 @@ class BTree {
     bool searchTree(BNode<T,orden> * current, T target);
     bool searchNode(BNode<T,orden> * current, const T & target, int & pos);
 
-    bool pushDown(BNode<T,orden> * current, const T & newEntry, T & median, BNode<T,orden> & rightBranch);
+    bool pushDown(BNode<T,orden> * current, const T & newEntry, T & median, BNode<T,orden> * & rightBranch);
     void push(BNode<T,orden> * current, const T & entry, BNode<T,orden> * rightBranch, int pos);
     void splitNode(BNode<T,orden> * current, const T & extraEntry, BNode<T,orden> * extraBranch, int pos, BNode<T,orden> * &rightHalf, T & median);
 
@@ -37,6 +37,7 @@ class BTree {
     void printDescending(BNode<T,orden> * current);
 
 public:
+    bool bandera;
     BTree();
     virtual ~BTree();
 
@@ -129,47 +130,54 @@ void BTree<T, orden>::insert(const T & newEntry){
     T median;
     BNode<T,orden> * rightBranch = nullptr;
 
-    if(pushDown(root, newEntry, median, rightBranch)){
-
+    if(bandera){
+      pushDown(root, newEntry, median, rightBranch);
     }else{
-        BNode<T, orden> * newRoot = new BNode<T, orden>();
-        newRoot->setCount(1);
-        newRoot->setData(0, median);
-        newRoot->setChildren(0, root);
-        newRoot->setChildren(1, rightBranch);
-        this->root = newRoot;
+      BNode<T, orden> * newRoot = new BNode<T, orden>();
+         newRoot->setCount(1);
+         newRoot->setData(0, median);
+         newRoot->setChildren(0, root);
+         newRoot->setChildren(1, rightBranch);
+         this->root = newRoot;
     }
 }
 
 template <class T, int orden>
-bool BTree<T, orden>::pushDown(BNode<T,orden> * current, const T & newEntry, T & median, BNode<T,orden> & rightBranch){
+bool BTree<T, orden>::pushDown(BNode<T,orden> * current, const T & newEntry, T & median, BNode<T,orden> * & rightBranch){
     int pos;
     if (current == nullptr){
         median = newEntry;
         rightBranch = nullptr;
-        return false;
+        bandera = false;
+        return bandera;
     }
     else{
         if (!searchNode(current, newEntry, pos)){
             T extraEntry;
             BNode<T,orden> * extraBranch = nullptr;
 
-            if(pushDown(current->getChildren(pos), newEntry, extraEntry, extraBranch)){
-               std::cout << "done" << std::endl;
+            if(bandera){
+              pushDown(current->getChildren(pos), newEntry, extraEntry, extraBranch);
+               bandera = true;
+               return bandera;
+
             }else {
                 if (current->getCount() < orden - 1){
                     push(current, extraEntry, extraBranch, pos);
+                    bandera = true;
+                    return bandera;
                 }
                 else{
                     splitNode(current, extraEntry, extraBranch, pos, rightBranch, median);
-                    return false;
+                    bandera = false;
+                    return bandera;
                 }
             }
         }
     }
-    return true;
+    bandera = true;
+    return bandera;
 }
-
 
 
 template <class T, int orden>
@@ -199,7 +207,7 @@ void BTree<T, orden>::splitNode(BNode<T,orden> * current, const T & extraEntry, 
         }
         current->setCount(mid);
         rightHalf->setCount(orden - 1 - mid);
-        push(extraEntry, extraEntry, extraBranch, pos);
+        push(current, extraEntry, extraBranch, pos);
     }
     else{
         mid++;
@@ -314,7 +322,6 @@ void BTree<T, orden>::restore( BNode<T,orden> * current,int pos){
 
 template <class T, int orden>
 void BTree<T, orden>::moveLeft( BNode<T,orden> * current, int pos){
-    load(current);
     BNode<T,orden> * leftBranch = current->getChildren(pos - 1);
     BNode<T,orden> * rightBranch = current->getChildren(pos);
 

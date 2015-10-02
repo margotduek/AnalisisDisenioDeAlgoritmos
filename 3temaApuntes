@@ -1,0 +1,33 @@
+Divide y venceras
+  - Descoponer un problema compleco en un conjunto de sub-problemas.
+  Es la más popular y la más facil de usar
+
+
+Programación dinámica
+  Optimizar algoritmos recursivos que sus funciones dependen de las anteriores
+    Guardar los valores en memoria para no recalcular cada vez que necesito esa
+    variable
+    
+Avidos
+
+
+Backtracking
+  Se fundamenta en la busqueda  a profundidad en un arbol
+    Pueden	suceder	dos	cosas
+     - Éxito:	Si	se	busca	una	sola	solución,	termina.	Si	busca	varias	soluciones	o	la	mejor,	continúa.
+     - Fracaso:	No	se	encuentra	una	solución,	regresar	borrando	los	nodos	parciales
+
+Branch and bound
+  Es una variante del Bactracking
+    - Selección:	se	encarga	de	extraer	un	nodo	de	entre	el	conjunto	de
+      los	 nodos	vivos.	La	forma	de	escogerlo	va	a	depender	directamente	de	la
+      estrategia	de	búsqueda	que	decidamos	para	el	algoritmo
+    - Ramificación:	se	construyen	los	posibles	nodos	hijos	del	nodo	 seleccionado
+      en	el	paso	anterior
+    - Poda:	en la	que	se	eliminan	algunos	de	los	nodos	creados	en	la	etapa
+      anterior
+      * Esto	contribuye	a	disminuir	en	lo	posible	el	espacio	de	búsqueda
+        y	así	atenuar	la complejidad	de	estos	algoritmos	basados	en	la
+        exploración	de	un	árbol	de posibilidades.
+      * Aquellos	nodos	no	podados	pasan	a	formar	parte	del	conjunto	de	nodos
+        vivos,	y	se	comienza	de	nuevo	por	el	proceso	de	selección.

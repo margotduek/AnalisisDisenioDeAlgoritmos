@@ -33,7 +33,7 @@ void shell(int v[], int N);
 void binarySort(int a[], int N);
 
 int main(){
-  int n =  1000;
+  int n =  10000;
   int A[n] , B[n];
   for(int i = 0; i < n; ++i){
     A[i] = rand() % 100;

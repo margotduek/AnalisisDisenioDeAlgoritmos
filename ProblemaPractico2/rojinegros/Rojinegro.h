@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 struct node{
   int red;
   int data;
@@ -10,12 +9,14 @@ struct node{
 struct tree{
   struct node *root;
 };
+/*Las que necesitan forward*/
+struct node *remove_balance(struct node *root, int dir, int *done);
 
 /*Esta funcion solo crea el nodo: */
 struct node *make_node(int data){
   /*Crea un nodo con malloc para poder usar memoria dinámica sin preocuparnos
   de liberar esa memoria después*/
-  struct node *rn = (rn*)malloc(sizeof (*rn));
+  struct node *rn = (node*)malloc(sizeof *rn);
   if (rn != NULL){
     rn->data = data;
     rn->red = 1; /* 1 is red, 0 is black */
@@ -181,9 +182,210 @@ struct node *insert_r(struct node *root, int data){
   }
   return root;
 }
-
+/**
 int insert(struct tree *tree, int data){
   tree->root = insert_r(tree->root, data);
+  tree->root->red = 0;
+
+  return 1;
+}
+
+
+/*
+  Borrar en un árbol rojinegro es lo que es más complicado, a la hora de incertar
+  decidimos que queremos que sea rojo, ya que es más facil arreglar un problema de
+  rojos, pero a la hora de borrar es complicado porque no sabemos que color es
+  y si es negro... seguro es un error
+*/
+struct node *remove_r(struct node *root, int data, int *done){
+  /*Si ya es el unico nodo, sale de la función*/
+  if (root == NULL){
+    *done = 1;
+  }else{
+    int dir;
+    /*Revisa que sea el nodo que quieres borrar*/
+    if (root->data == data){
+      /*Revisa si uno de los dos hijos esta vacío*/
+      if (root->link[0] == NULL || root->link[1] == NULL){
+        struct node *save = root->link[root->link[0] == NULL];
+        /* Si es rojo, se sale ya que no causa problema a la altura de nodos
+        negros, o si su hijo es rojo, lo vuelve negro y se arregla el problema,
+        ya que quitaste al padre negro, pero al hijo rojo lo convesrtiste en negro
+        entonces la altura queda igual*/
+        if (is_red(root)){
+          *done = 1;
+        }else if (is_red(save)){
+          save->red = 0;
+          *done = 1;
+        }
+        free(root);
+        return save;
+      }else{
+        struct node *heir = root->link[0];
+        /*Mientras el hijo de la derecha sea diferente de NULL, va a seguir
+        recorriendo hacia la derecha el árbol*/
+        while (heir->link[1] != NULL){
+          heir = heir->link[1];
+        }
+
+        root->data = heir->data;
+        data = heir->data;
+      }
+    }
+
+    dir = root->data < data;
+    root->link[dir] = remove_r(root->link[dir], data, done);
+
+    if (!*done){
+      root = remove_balance(root, dir, done);
+    }
+  }
+  return root;
+}
+
+int remove(struct tree *tree, int data){
+  int done = 0;
+  tree->root = remove_r(tree->root, data, &done);
+  if (tree->root != NULL){
+    tree->root->red = 0;
+  }
+  return 1;
+}
+
+
+struct node *remove_balance(struct node *root, int dir, int *done){
+  struct node *p = root;
+  /*Asigna a la variable *s el nodo hermano*/
+  struct node *s = root->link[!dir];
+  if (s != NULL && !is_red(s)){
+    /* Esto es en el caso que el hijo del nodo con el que estmos trabajando
+    sea negro */
+    if (!is_red(s->link[0]) && !is_red(s->link[1])){
+      /*y que los dos hijos sean negros (aqui serían los nietos de p)*/
+      if (is_red(p)){
+          /*Si el abuelo es rojo...*/
+          *done = 1;
+      }
+      /*ponemos al abuelo negro y al hijo rojo*/
+      p->red = 0;
+      s->red = 1;
+    }else{
+      /*Save tiene el valor de rojo... 1 si es , 0si es negro*/
+      int save = root->red;
+      /*Si el nieto izquierdo es rojo entonces es una rotación simple*/
+      if (is_red(s->link[!dir])){
+        p = single(p, dir);
+      }else{
+        /*Si el derecho es el rojo, es rotación doble*/
+        p = rDouble(p, dir);
+      }
+      /*ponemos al abuelo con el color de root y a sus dos hijos negros*/
+      p->red = save;
+      p->link[0]->red = 0;
+      p->link[1]->red = 0;
+      *done = 1;
+    }
+  }
+  else if (s->link[dir] != NULL){
+    struct node *r = s->link[dir];
+    /* Caso en el que el hijo derecho del padre (que es hijo izquierdo del abuelo)*/
+    /*Si los dos hijos de r son negros, se hace una rotación simple y los dos padres
+    osea hijos de p los hacemos rojos*/
+    if (!is_red(r->link[0]) && !is_red(r->link[1])){
+      p = single(p, dir);
+      p->link[dir]->link[!dir]->red = 1;
+    }else{
+      /*Si in hijo es rojo hacemos tambien una rotacion simple pero al otro lado*/
+      if (is_red(r->link[dir])){
+        s->link[dir] = single(r, !dir);
+      }
+
+      p = rDouble(p, dir);
+      s->link[dir]->red = 0;/*hijo del padre negro*/
+      p->link[!dir]->red = 1;/*hijo del Abuelo rojo*/
+    }
+
+    p->red = 0; /*Padre negro*/
+    p->link[dir]->red = 0; /*Hijo derecho negro*/
+    *done = 1;
+  }
+
+  return p;
+}
+
+
+
+
+
+
+int insert(struct tree *tree, int data){
+  if (tree->root == NULL){
+    /* Empty tree case */
+    tree->root = make_node(data);
+    if (tree->root == NULL){
+      return 0;
+    }
+  }else{
+    struct node head = { 0 }; /* False tree root */
+
+    struct node *g, *t;     /* Grandparent & parent */
+    struct node *p, *q;     /* Iterator & parent */
+    int dir = 0, last;
+
+    /* Set up helpers */
+    t = &head;
+    g = p = NULL;
+    q = t->link[1] = tree->root;
+
+    /* Search down the tree */
+    for (;;){
+      if (q == NULL){
+        /* Insert new node at the bottom */
+        p->link[dir] = q = make_node(data);
+
+        if (q == NULL){
+          return 0;
+        }
+      }else if (is_red(q->link[0]) && is_red(q->link[1])){
+        /* Color flip */
+        q->red = 1;
+        q->link[0]->red = 0;
+        q->link[1]->red = 0;
+      }
+
+      /* Fix red violation */
+      if (is_red(q) && is_red(p)){
+        int dir2 = t->link[1] == g;
+
+        if (q == p->link[last{
+          t->link[dir2] = single(g, !last);
+        }else{
+          t->link[dir2] = rDouble(g, !last);
+        }
+      }
+
+      /* Stop if found */
+      if (q->data == data){
+        break;
+      }
+
+      last = dir;
+      dir = q->data < data;
+
+      /* Update helpers */
+      if (g != NULL){
+        t = g;
+      }
+
+      g = p, p = q;
+      q = q->link[dir];
+    }
+
+    /* Update root */
+    tree->root = head.link[1];
+  }
+
+  /* Make root black */
   tree->root->red = 0;
 
   return 1;
