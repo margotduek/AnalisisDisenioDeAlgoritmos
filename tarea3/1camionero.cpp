@@ -9,6 +9,11 @@
     abastecer gasolina el menor número de veces posible.
     Diseñe un algoritmo eficiente que determine en qué gasolineras tiene que parar el
     camionero.
+
+
+    En el peor de los casos la complejidad es lineal ya que tenemos solamente
+    un ciclo.
+    O(n) = n
 */
 
 

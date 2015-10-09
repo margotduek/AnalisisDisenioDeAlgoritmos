@@ -9,6 +9,13 @@
     subsecuencia de X y subsecuencia de Y.
     Diseñe un algoritmo que permita determinar la subsecuencia de longitud máxima
     común a dos secuencias.
+
+
+
+    La complejiad de mi algoritmo es igual a n*m porque se recorren las dos
+    secuencias una de jongitud n y otra de longitud m
+
+
 */
 
 #include <string>
@@ -20,11 +27,9 @@ int revisaHastaFrenar(std::string texto, int i, std::string segundo, int j);
 std::string textoenIhastaJ(std::string texto, int i, std::string segundo, int j);
 
 
-
-
 int main(){
-  std::string nombre = "mi nombre mar es margot";
-  std::string secuencia = "margot";
+  std::string nombre = "en el mar la vida es mas sabrosa margot aaaaa";
+  std::string secuencia = "mi nombre mar es margot b aaaaa margot sabrosa margot";
   std:: cout << boyerymio(nombre, nombre.length(), secuencia, secuencia.length()) << std::endl;
 
   return 0;
@@ -71,6 +76,10 @@ std::string textoenIhastaJ(std::string texto, int i, std::string segundo, int j)
 
 
 /*
+
+Este pseudocodigo lo consegui en intenet
+
+
 Input:    Text with n characters and Pattern with m characters
 Output: Index of the first substring of T matching P
 
