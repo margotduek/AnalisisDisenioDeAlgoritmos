@@ -1,0 +1,15 @@
+--------
+/home/margot/Documents/uni/algoritmos/pp2/Snap-2.4/examples/testgraph/testgraph.Err
+Thu Oct 22 20:24:54 2015
+Execution stopped: IsNode(SrcNId) && IsNode(DstNId) [Reason:'12 or 14 not a node.'], file graph.cpp, line 287
+--------
+--------
+/home/margot/Documents/uni/algoritmos/pp2/Snap-2.4/examples/testgraph/testgraph.Err
+Thu Oct 22 20:25:34 2015
+Execution stopped: IsNode(SrcNId) && IsNode(DstNId) [Reason:'12 or 14 not a node.'], file graph.cpp, line 287
+--------
+--------
+/home/margot/Documents/uni/algoritmos/pp2/Snap-2.4/examples/testgraph/testgraph.Err
+Thu Oct 22 20:27:22 2015
+Execution stopped: IsNode(SrcNId) && IsNode(DstNId) [Reason:'12 or 14 not a node.'], file graph.cpp, line 287
+--------
