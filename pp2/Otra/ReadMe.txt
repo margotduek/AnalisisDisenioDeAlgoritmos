@@ -1,3 +1,7 @@
+
+
+
+
 ========================================================================
   SNAP : Stanford Network Analysis Platform
 	http://snap.stanford.edu
@@ -13,9 +17,9 @@ of millions of nodes and billions of edges.
 Directory structure:
   http://snap.stanford.edu/snap/description.html
 
-  snap-core: 
+  snap-core:
         the core SNAP graph library
-  snap-adv: 
+  snap-adv:
         advanced SNAP components, not in the core, but used by examples
   snap-exp:
         experimental SNAP components, still in development
@@ -23,7 +27,7 @@ Directory structure:
         small sample applications that demonstrate SNAP functionality
   tutorials:
         simple programs, demonstrating use of various classes
-  glib-core: 
+  glib-core:
         STL-like library that implements basic data structures, like vectors
         (TVec), hash-tables (THash) and strings (TStr), provides
         serialization and so on
@@ -53,7 +57,7 @@ To compile on Mac OSX, using Xcode:
   2. Product -> Build.  (or Cmd + B).
   3. Run executable via the command line; or
      Choose the scheme's executable (Product -> Edit Scheme -> Run -> Info)
-     and run: Product -> Run (or Cmd + R). 
+     and run: Product -> Run (or Cmd + R).
      Note: If using Gnuplot, add the PATH to the scheme's environment variables.
      or create symlink to /usr/bin:
      sudo ln -s <gnuplot_dir>/gnuplot /usr/bin/
@@ -84,7 +88,7 @@ Description of examples:
 	Finds overlapping dense groups of nodes in networks,
 	based on the Clique Percolation Method.
   coda :
-        Implements a large scale overlapping community detection method 
+        Implements a large scale overlapping community detection method
         based on Communities through Directed Affiliations (CoDA), which
         handles directed as well as undirected networks. The method is able
         to find 2-mode communities where the member nodes form a bipartite
@@ -97,11 +101,11 @@ Description of examples:
 	articulation points and bridge edges of a graph.
   flows :
         Computes the maximum network flow in a network.
-  forestfire : 
+  forestfire :
 	Generates graphs using the Forest Fire model.
-  graphgen : 
+  graphgen :
 	Generates undirected graphs using one of the many SNAP graph generators.
-  graphhash : 
+  graphhash :
 	Demonstrates the use of TGHash graph hash table, useful for
 	counting frequencies of small subgraphs or information cascades.
   infopath :
@@ -110,26 +114,26 @@ Description of examples:
   kcores :
   	Computes the k-core decomposition of the network and plots
 	the number of nodes in a k-core of a graph as a function of k.
-  kronem : 
+  kronem :
   	Estimates Kronecker graph parameter matrix using EM algorithm.
-  kronfit : 
+  kronfit :
   	Estimates Kronecker graph parameter matrix.
-  krongen : 
+  krongen :
   	Generates Kronecker graphs.
   magfit :
 	Estimates Multiplicative Attribute Graph (MAG) model parameter.
-  maggen : 
+  maggen :
 	Generates Multiplicative Attribute Graphs (MAG).
   mkdatasets :
 	Demonstrates how to load different kinds of networks in various
 	network formats and how to compute various statistics of the network.
-  motifs : 
-  	Counts the number of occurrence of every possible subgraph on K nodes 
+  motifs :
+  	Counts the number of occurrence of every possible subgraph on K nodes
   	in the network.
-  ncpplot : 
+  ncpplot :
 	Plots the Network Community Profile (NCP).
   netevol :
-  	Computes properties of an evolving network, like evolution of 
+  	Computes properties of an evolving network, like evolution of
   	diameter, densification power law, degree distribution, etc.
   netinf :
 	Implements netinf algorithm for network inference from
@@ -158,27 +162,27 @@ The library defines Graphs (nodes and edges) and Networks (graphs with data
 associated with nodes and edges).
 
 Graph types:
-  TNGraph : 
+  TNGraph :
   	directed graph (single directed edge between a pair of nodes)
-  TUNGraph : 
+  TUNGraph :
   	undirected graph (single undirected edge between a pair of nodes)
-  TNEGraph : 
+  TNEGraph :
   	directed multi-graph (multiple directed edges can exist between
         a pair of nodes)
 
 Network types:
-  TNodeNet<TNodeData> : 
+  TNodeNet<TNodeData> :
   	like TNGraph, but with TNodeData object for each node
   TNodeEDatNet<TNodeData,TEdgeData> :
         like TNGraph, but with TNodeData object for each node and TEdgeData
         object for each edge
-  TNodeEdgeNet<TNodeData, TEdgeData> : 
+  TNodeEdgeNet<TNodeData, TEdgeData> :
   	like TNEGraph but with TNodeData object for each node and TEdgeData
 	object for each edge
   TNEANet :
         like TNEGraph, but with attributes on nodes and edges. The attributes
         are dynamic in that they can be defined at runtime
-  TBigNet<TNodeData> : 
+  TBigNet<TNodeData> :
   	memory efficient implementation of TNodeNet (avoids memory
 	fragmentation)
 
@@ -237,7 +241,7 @@ snap-core:
         large graphs. Useful when one wants to count frequencies of various
         small subgraphs or cascades.
   gio.h : Graph input output. Methods for loading and saving various textual
-        and XML based graph formats: Pajek, ORA, DynNet, GraphML (GML), 
+        and XML based graph formats: Pajek, ORA, DynNet, GraphML (GML),
         Matlab.
   graph.h : Implements graph types TUNGraph, TNGraph and TNEGraph.
   gstat.h : Computes many structural properties of static and evolving networks.
@@ -283,4 +287,3 @@ snap-exp:
   trawling.h : Algorithm of extracting bipartite cliques from the network.
   wgtnet.h : Weighted networks.
   wikinet.h : Networks based on Wikipedia.
-
