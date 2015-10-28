@@ -278,7 +278,6 @@ void Kruskal(){
             }
         }
     }
-    //Ordenar clusters
      for (int j = 0; j < clusters.size(); j++){
         for (int i = 0; i < clusters.size(); i++){
             if (vVal[clusters.at(i).at(0)][clusters.at(i).at(1)] > vVal[clusters.at(j).at(0)][clusters.at(j).at(1)]){
@@ -289,7 +288,6 @@ void Kruskal(){
         }
     }
 
-    //Agregar a la cola
     for (int i = 0; i < clusters.size(); i++){
         q.push_back(clusters.at(i));
     }
