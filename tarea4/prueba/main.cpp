@@ -1,9 +1,3 @@
-/*
-By Alberto Pickering
-These version has been alterated from the original for the propuses
-of the homework also the graph is different. 
-*/
-
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -11,6 +5,41 @@ of the homework also the graph is different.
 
 using namespace std::chrono;
 typedef PNGraph DGraph;
+
+void GraphML(DGraph g);
+void GEXF(DGraph g);
+void GDF(DGraph g);
+void JSON(DGraph g);
+
+int main() {
+	DGraph dg = TSnap::LoadEdgeList<DGraph>("facebook_combined.txt",0,1);
+
+	high_resolution_clock::time_point t1 = high_resolution_clock::now();
+	GraphML(dg);
+	high_resolution_clock::time_point t2 = high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+	std::cout << "GraphML: " << duration << std::endl;	t1 = high_resolution_clock::now();
+	GEXF(dg);
+	t2 = high_resolution_clock::now();
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+	std::cout << "GEXF: " << duration << std::endl;
+
+	t1 = high_resolution_clock::now();
+	GDF(dg);
+	t2 = high_resolution_clock::now();
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+	std::cout << "GDF: " << duration << std::endl;
+
+	t1 = high_resolution_clock::now();
+	JSON(dg);
+	t2 = high_resolution_clock::now();
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+	std::cout << "JSON: " << duration << std::endl;
+	return 0;
+}
+
+
+
 
 void GraphML(DGraph g) {
 	std::ofstream file ("facebook.graphml");
@@ -98,31 +127,9 @@ void JSON(DGraph g) {
 	}
 }
 
-int main() {
-	DGraph dg = TSnap::LoadEdgeList<DGraph>("facebook_combined.txt",0,1);
 
-	high_resolution_clock::time_point t1 = high_resolution_clock::now();
-	GraphML(dg);
-	high_resolution_clock::time_point t2 = high_resolution_clock::now();
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-	std::cout << "GraphML: " << duration << std::endl;
 
-	t1 = high_resolution_clock::now();
-	GEXF(dg);
-	t2 = high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-	std::cout << "GEXF: " << duration << std::endl;
-
-	t1 = high_resolution_clock::now();
-	GDF(dg);
-	t2 = high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-	std::cout << "GDF: " << duration << std::endl;
-
-	t1 = high_resolution_clock::now();
-	JSON(dg);
-	t2 = high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-	std::cout << "JSON: " << duration << std::endl;
-	return 0;
-}
+/*
+Este Código fue sacado de https://github.com/alberto911/exportGraphs/commits?author=alberto911
+y fué alterado para uso propio.
+*/
