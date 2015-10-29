@@ -16,8 +16,6 @@
 %\setcopyright{cagovmixed}
 
 
-% DOI
-\doi{10.475/123_4}
 
 %Conference
 \conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
@@ -30,15 +28,7 @@
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{Graph prossesing
-\titlenote{(Produces the permission block, and
-copyright information). For use with
-SIG-ALTERNATE.CLS. Supported by ACM.}}
-\subtitle{Graph prossesing by using the SNAP library
-\titlenote{A full version of this paper is available as
-\textit{Author's Guide to Preparing ACM SIG Proceedings Using
-\LaTeX$2_\epsilon$\ and BibTeX} at
-\texttt{www.acm.org/eaddress.htm}}}
+
 %
 % You need the command \numberofauthors to handle the 'placement
 % and alignment' of the authors beneath the title.
@@ -67,7 +57,7 @@ SIG-ALTERNATE.CLS. Supported by ACM.}}
 \numberofauthors{1}
 \author{
 \alignauthor
-Margot Duek\titlenote{Es un gran nombre}\\
+Margot Duek\titlenote{}\\
        \affaddr{Instituto Tecnologico de Estudios Superiores de Monterrey}\\
        \affaddr{Mexico City}\\
        \email{margotduek@gmail.com}
@@ -147,98 +137,81 @@ of millions of nodes and billions of edges, this can scale to massive networks
 and si written in c++.
 
 
-\section{The {\secit Body} of The Paper}
+\section{The Body of The Paper}
+We have already talked about what are graphs, what is SNAP and what can
+we do when them, but we haven't talked about what can we do whith
+these tools or how to use them.
+
+Is important to say that we will be working with the facebook graph sample,
+but you can do it with any graph, just remeber to change the name of the
+file everytime we need to make a route.
+
 \subsection{Importing the Facebook graph}
-We have already talked about 
-We have already seen several typeface changes in this sample.  You
-can indicate italicized words or phrases in your text with
-the command \texttt{{\char'134}textit}; emboldening with the
-command \texttt{{\char'134}textbf}
-and typewriter-style (for instance, for computer code) with
-\texttt{{\char'134}texttt}.  But remember, you do not
-have to indicate typestyle changes when such changes are
-part of the \textit{structural} elements of your
-article; for instance, the heading of this subsection will
-be in a sans serif\footnote{A third footnote, here.
-Let's make this a rather short one to
-see how it looks.} typeface, but that is handled by the
-document class file. Take care with the use
-of\footnote{A fourth, and last, footnote.}
-the curly braces in typeface changes; they mark
-the beginning and end of
-the text that is to be in the different typeface.
+The first thing we are going to talk about is of how to import a dataset that
+includes a sample of a Facebook graph. You need to get into
+\texttt{https://snap.stanford.edu/data/index.html} and choose which
+graph you want to use, in these case, we will get into social networks directory
+and inside there we will choose Facebook, remember you can choose anything.
 
-You can use whatever symbols, accented characters, or
-non-English characters you need anywhere in your document;
-you can find a complete list of what is
-available in the \textit{\LaTeX\
-User's Guide}\cite{Lamport:LaTeX}.
+You will need to download the facebook\_combined.txt.gz, unzipit in the folder
 
-\subsection{Math Equations}
-You may want to display math equations in three distinct styles:
-inline, numbered or non-numbered display.  Each of
-the three are discussed in the next sections.
+where you want to use it (Don't forget to add the SNAP library in the
+directory where you will work) and when you see the file, you will see a
+bunch of numbers, those numbers are the graph.
 
-\subsubsection{Inline (In-text) Equations}
-A formula that appears in the running text is called an
-inline or in-text formula.  It is produced by the
-\textbf{math} environment, which can be
-invoked with the usual \texttt{{\char'134}begin. . .{\char'134}end}
-construction or with the short form \texttt{\$. . .\$}. You
-can use any of the symbols and structures,
-from $\alpha$ to $\omega$, available in
-\LaTeX\cite{Lamport:LaTeX}; this section will simply show a
-few examples of in-text equations in context. Notice how
-this equation: \begin{math}\lim_{n\rightarrow \infty}x=0\end{math},
-set here in in-line math style, looks slightly different when
-set in display style.  (See next section).
+Crete your main.cpp, there you will have to import the graph and chek if it was
+imported succesfully, inside the main, you wil need to put a line that should
+looke like these,
+\texttt{PUNGraph g=TSnap::LoadEdgeList<PUNGraph>("../facebook
+\_combined.txt",0,1);}
+where you are declaring a new PUNGraph variable
+and giving thar variable the Facebook graph, now we have imported the graph.
 
-\subsubsection{Display Equations}
-A numbered display equation -- one set off by vertical space
-from the text and centered horizontally -- is produced
-by the \textbf{equation} environment. An unnumbered display
-equation is produced by the \textbf{displaymath} environment.
+The only way to know if something really worked is by checking it, we
+will print the amount of nodes that we have on the graph by printing
+the name of your graph.GetNodes(), in this case, g->GetNodes(); and if
+it prins the amount of nodes that the SNAP's web syte says that means you
+have succesfully imported the graph.
 
-Again, in either environment, you can use any of the symbols
-and structures available in \LaTeX; this section will just
-give a couple of examples of display equations in context.
-First, consider the equation, shown as an inline equation above:
-\begin{equation}\lim_{n\rightarrow \infty}x=0\end{equation}
-Notice how it is formatted somewhat differently in
-the \textbf{displaymath}
-environment.  Now, we'll enter an unnumbered equation:
-\begin{displaymath}\sum_{i=0}^{\infty} x + 1\end{displaymath}
-and follow it with another numbered equation:
-\begin{equation}\sum_{i=0}^{\infty}x_i=\int_{0}^{\pi+2} f\end{equation}
-just to demonstrate \LaTeX's able handling of numbering.
 
-\subsection{Citations}
-Citations to articles \cite{bowman:reasoning,
-clark:pct, braams:babel, herlihy:methodology},
-conference proceedings \cite{clark:pct} or
-books \cite{salas:calculus, Lamport:LaTeX} listed
-in the Bibliography section of your
-article will occur throughout the text of your article.
-You should use BibTeX to automatically produce this bibliography;
-you simply need to insert one of several citation commands with
-a key of the item cited in the proper location in
-the \texttt{.tex} file \cite{Lamport:LaTeX}.
-The key is a short reference you invent to uniquely
-identify each work; in this sample document, the key is
-the first author's surname and a
-word from the title.  This identifying key is included
-with each item in the \texttt{.bib} file for your article.
+\subsection{Exporting the graph}
+Now is time to talk about how to export the graph, we will
+export the graph in four different ways, GraphML, GEXF,
+GDF and JSON Graph Format with GraphSON, each of them have their oun
+implementation, but these time wil will talk about the general
+process we should make and after that, you shold be able
+to make the same thing with the other ones.
 
-The details of the construction of the \texttt{.bib} file
-are beyond the scope of this sample document, but more
-information can be found in the \textit{Author's Guide},
-and exhaustive details in the \textit{\LaTeX\ User's
-Guide}\cite{Lamport:LaTeX}.
+Basically what we need to do, is to make a new ofstream file
+and we will start to print what we want inside that file
+(in each case we have a different file), these method should
+have a condition or a cicle so that all the nodes can be printed
+inside of that file.
 
-This article shows only the plainest form
-of the citation command, using \texttt{{\char'134}cite}.
-This is what is stipulated in the SIGS style specifications.
-No other citation format is endorsed or supported.
+
+\subsection{LaTex}
+A vey big problem for people who is not used to designing and thinking
+of how shold things go on an investigation paper is that we have to
+think where to put each of the things in the document, like the date,
+the name, presonal information and other things.
+
+For all the people that is most of all interested in the real
+content, you can use \LaTeX\ , these is a tool that allows people
+to just write content and dont worry about designing problems,
+and let the designers take care of that.
+
+The only thing we shold do is (if you are in linux, if you are not,
+you should find a paper with a tutorial for your operating sistem)
+install any tool for \LaTeX\ , in my case I used Texlive, after
+doing that, you should open your favorite text editor and start
+writting your paper, in my case I used a tamplate from ACM
+and I edited it.
+
+To see what you have crated, you need to make your .tex file into a
+.pdf by doing ctrl + Alt + B, if when you do that nothing happends,
+that means you have a compilation error, you should check the syntaxis
+of everything that has been written in the document.
+
 
 \subsection{Tables}
 Because tables cannot be split across pages, the best

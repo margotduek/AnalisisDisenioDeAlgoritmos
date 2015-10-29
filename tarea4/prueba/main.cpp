@@ -1,3 +1,9 @@
+/*
+By Alberto Pickering
+These version has been alterated from the original for the propuses
+of the homework also the graph is different. 
+*/
+
 #include <iostream>
 #include <fstream>
 #include <chrono>
