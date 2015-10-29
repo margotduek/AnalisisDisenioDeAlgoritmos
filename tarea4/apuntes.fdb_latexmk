@@ -1,0 +1,13 @@
+# Fdb version 3
+["pdflatex"] 1446085799 "apuntes.tex" "apuntes.pdf" "apuntes" 1446085799
+  "/etc/texmf/web2c/texmf.cnf" 1446081340 1101 af7716885e081ab43982cab7b4672c1a ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1392645748 31083 1dfd8bf685ce0009c40532fedf8a7c53 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1392645748 31083 1dfd8bf685ce0009c40532fedf8a7c53 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1446081416 3822875 7822ee7dae53498f96d60629e7e35055 ""
+  "apuntes.aux" 1446085713 8 a94a2480d3289e625eea47cd1b285758 ""
+  "apuntes.tex" 1446085798 315 33226a0620b87c5e9ebe4e033ecadf5a ""
+  "sig-alternate.cls" 0 -1 0 ""
+  (generated)
+  "apuntes.pdf"
+  "apuntes.aux"
+  "apuntes.log"
