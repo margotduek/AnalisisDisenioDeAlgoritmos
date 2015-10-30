@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex prueba"] 1446144197 "prueba.aux" "prueba.bbl" "prueba" 1446144257
+["bibtex prueba"] 1446171923 "prueba.aux" "prueba.bbl" "prueba" 1446172294
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/abbrv.bst" 1292289607 20329 b5fed53e10044d0f8112183785c759b1 ""
-  "prueba.aux" 1446144257 1897 edf269854b816d652a65a19007889cbf ""
+  "prueba.aux" 1446172294 2006 9da157f4328a88ac80aec1c84855ebbd ""
   "prueba.bcf" 0 -1 0 ""
   "sigproc.bib" 1442241970 1492 045cff45096bc53833df7eca105d1ace ""
   (generated)
-  "prueba.bbl"
   "prueba.blg"
-["pdflatex"] 1446144257 "prueba.tex" "prueba.pdf" "prueba" 1446144257
+  "prueba.bbl"
+["pdflatex"] 1446172293 "prueba.tex" "prueba.pdf" "prueba" 1446172294
   "/etc/texmf/web2c/texmf.cnf" 1446081340 1101 af7716885e081ab43982cab7b4672c1a ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
@@ -140,14 +140,16 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1446081416 3822875 7822ee7dae53498f96d60629e7e35055 ""
   "acmcopyright.sty" 1442241958 9626 03a22ffcc9f51aaef67ac6ed43847230 ""
   "gephi.jpg" 1446140439 5345 48210f1ec68357fb10247611c73fe3fa ""
-  "prueba.aux" 1446144257 1897 edf269854b816d652a65a19007889cbf ""
-  "prueba.bbl" 1446144197 49 0eba253fc001332e731e8aba3f23127b "bibtex prueba"
-  "prueba.tex" 1446144253 9420 c8082f9822cb83738841e5e294743eea ""
+  "margot1-eps-converted-to.pdf" 1446171742 2346613 d168d6a7bcc75703418e5c624dda7e45 ""
+  "margot1.eps" 1446171564 12410499 622b0c9067ce9bbc459442f180c34600 ""
+  "prueba.aux" 1446172294 2006 9da157f4328a88ac80aec1c84855ebbd ""
+  "prueba.bbl" 1446171923 49 0eba253fc001332e731e8aba3f23127b "bibtex prueba"
+  "prueba.tex" 1446172293 9645 1dbec463bd301a4c6a5c5349f95e9c2d ""
   "sig-alternate-05-2015.cls" 1442241952 66374 9418c0da83653c0543c11d4ffc400d01 ""
   (generated)
-  "prueba.log"
   "rosette-eps-converted-to.pdf"
-  "fly-eps-converted-to.pdf"
+  "prueba.log"
   "flies-eps-converted-to.pdf"
+  "fly-eps-converted-to.pdf"
   "prueba.aux"
   "prueba.pdf"

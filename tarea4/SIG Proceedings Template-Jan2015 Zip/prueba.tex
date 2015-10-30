@@ -82,7 +82,7 @@ and is written in c++.
 We have already talked about what are graphs, what is SNAP and what can
 we do when them, but we haven't talked about what can we do with
 these tools or how to use them.
-  
+
 Is important to say that we will be working with the facebook graph sample,
 but you can do it with any graph, just remember to change the name of the
 file every time we need to make a route.
@@ -132,12 +132,12 @@ that all the nodes can be printed  of that file.
 
 GraphML is the less efficient format of exporting from
 the four we tasted, it took 26 milliseconds with a
-linear temporal complexity in the worst of the cases
+temporal complexity in the worst of the cases of O(V+E)
 because it have two for's inside of an if.
 
 Executing GEXF function took us a total of 22 seconds,
-this also have in the worst of the cases a temporal complexity
-that is linear because inside of an if we have two separated
+this also have in the worst of the cases a of O(V+E)
+complexity because inside of an if we have two separated
 for's to convert each node.
 
 The total time of converting the facebook sample graph
@@ -152,7 +152,11 @@ to a JSON Graph Format with GraphSON which also has
 a very good time, we have got 16 seconds. The
 implementation of these function is based on the same
 architecture than the other ones, an if condition
-and two for cycles to export each node.
+and two for cycles to export each node that is why
+we have O(V+E).
+
+In all the cases before mencioned, we have a space
+complexity that is constant, S(1).
 
 
 
@@ -195,6 +199,13 @@ which is a directory on a GitHub repository.
 \includegraphics{gephi}
 \caption{A sample Gephi graph}
 \end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[height=4in, width=4in]{margot1}
+\caption{My Facebook sample graph}
+\end{figure}
+
 
 \section{Conclusions}
 By using any library, in this case, we used SNAP but there
