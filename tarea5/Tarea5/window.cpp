@@ -14,6 +14,10 @@ Window::Window()
   shapeComboBox->addItem(tr("cuadrado"));
   shapeComboBox->addItem(tr("curva"));
   shapeComboBox->addItem(tr("poligono"));
+  shapeComboBox->addItem(tr("figuras"));
+  shapeComboBox->addItem(tr("triangulo"));
+  shapeComboBox->addItem(tr("circulo"));
+
 
   /* es donde se define el cudrito donde van a estar las figuras, para que la
      hora de agrandar no se salga del cuadrito y no invada el del otro*/
@@ -27,7 +31,7 @@ Window::Window()
     transformedRenderArea[i] = new Render;
 
     operationComboBoxes[i] = new QComboBox;
-    operationComboBoxes[i]->addItem(tr("Sin transforación"));
+    operationComboBoxes[i]->addItem(tr("Sin transforacion"));
     operationComboBoxes[i]->addItem(tr("Ratocaión"));
     operationComboBoxes[i]->addItem(tr("Zoom in"));
     operationComboBoxes[i]->addItem(tr("Zoom Out"));
@@ -40,7 +44,7 @@ Window::Window()
 
     /* Esto está agregando cada cuadrito más uno*/
     layout->addWidget(transformedRenderArea[i], 0, i + 1 );
-    layout->addWidget(operationComboBoxes[i], 0, i+1);
+    layout->addWidget(operationComboBoxes[i], 1, i+1);
   }
 
   setLayout(layout);
@@ -69,24 +73,41 @@ void Window::setupShapes(){
 
 
   QPainterPath poli;
-  poli.moveTo(-45.0, -20.0);
-  poli.lineTo(0.0, -45.0);
-  poli.lineTo(45.0, -20.0);
-  poli.lineTo(45.0, 45.0);
-  poli.lineTo(-45.0, 45.0);
-  poli.lineTo(-45.0, -20.0);
-  poli.addRect(15.0, 5.0, 20.0, 35.0);
-  poli.addRect(-35.0, -15.0, 25.0, 25.0);
+  poli.moveTo(-20.0, -20.0);
+  poli.lineTo(20.0, -20.0);
+  poli.lineTo(10.0, 20.0);
+  poli.lineTo(-10.0, 20.0);
+  poli.lineTo(-20.0, -20.0);
 
-  QPainterPath text;
-  QFont font;
-  font.setPixelSize(40);
-  QRect fontBoundingRect = QFontMetrics(font).boundingRect(tr("Hello"));
-  text.addText(-QPointF(fontBoundingRect.center()), font, tr("Hello"));
+
+  QPainterPath figuras;
+  figuras.moveTo(10.0, -20);
+  figuras.lineTo(20, 20);
+  figuras.lineTo(30, -20);
+  figuras.lineTo(10, -20);
+  figuras.moveTo(35.0, 35.0);
+  figuras.lineTo(-25.0, 35.0);
+  figuras.lineTo(10.0, -25.0);
+  figuras.lineTo(-10.0, -25.0);
+  figuras.lineTo(35.0, 35.0);
+
+
+  QPainterPath triangulo;
+  triangulo.moveTo(10.0, -20);
+  triangulo.lineTo(20, 20);
+  triangulo.lineTo(30, -20);
+  triangulo.lineTo(10, -20);
+
+  QPainterPath circulo;
+  circulo.addEllipse(-50.0, -50.0, 100.0, 100.0);
 
   shapes.append(cuadrado);
   shapes.append(arco);
   shapes.append(poli);
+  shapes.append(figuras);
+  shapes.append(triangulo);
+  shapes.append(circulo);
+
 
 
   connect(shapeComboBox, SIGNAL(activated(int)), this, SLOT(shapeSelected(int)));

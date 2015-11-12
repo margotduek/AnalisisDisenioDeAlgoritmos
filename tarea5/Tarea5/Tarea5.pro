@@ -11,3 +11,6 @@ INCLUDEPATH += .
 HEADERS += render.h window.h
 SOURCES += main.cpp render.cpp window.cpp
 RESOURCES += qml.qrc
+
+FORMS += \
+    form.ui
