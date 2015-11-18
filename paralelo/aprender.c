@@ -29,8 +29,12 @@ int main(int argc, char const *argv[]) {
   }
 
   /* Computo */
-  for( i = 0; i < N; i++) {
-    S[i] = A[i] + B[i];
+  #pragma omp parallel private(i)
+  {
+    #pragma omp for
+    for( i = 0; i < N; i++) {
+      S[i] = A[i] + B[i];
+    }
   }
 
 

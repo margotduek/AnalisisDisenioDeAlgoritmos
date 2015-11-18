@@ -1,11 +1,12 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QComboBox>
-#include <QGridLayout>
-#include <QGraphicsView>
-#include <qgraphicsview.h>
+
 #include <QtGui>
+#include <iostream>
+#include <QDebug>
+
+using namespace std;
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,9 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QGraphicsScene *scene = new QGraphicsScene;
-   // scene = new QGraphicsScene;
+    qDebug() << "1" << endl;
+
+    //QGraphicsScene *scene = new QGraphicsScene;
+    scene = new QGraphicsScene;
     scene->setSceneRect(0,0,256,192);
+    qDebug() << "hola" << endl;
+    scene->addLine(0, 96,256,96, QPen(Qt::green));
+
+    imprimeCuadrado(258);
 
   //QGraphicsScene *scene = new QGraphicsScene;
   //scene->setSceneRect(0, 0, 256, 192);
@@ -24,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->graphicsView->show();
 
 
-  setupShapes();
+  //setupShapes();
 }
 
 MainWindow::~MainWindow()
@@ -32,9 +39,54 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+
+
+void MainWindow::imprimeCuadrado(int x){
+   //aqui dibujo
+
+    scene->addLine(5,5,20,5);
+    scene->addLine(20,5,20,20);
+    scene->addLine(20,20,5,20);
+    scene->addLine(5,20,5,5);
+
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->show();
+}
+
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+    switch(index){
+    case 0:
+        imprimeCuadrado(1);
+    break;
+    }
+}
+
+
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 void MainWindow::setupShapes(){
   QPainterPath cuadrado;
-  /*esta linea colorea la figura*/
+  /*esta linea colorea la figura*//*
   cuadrado.setFillRule(Qt::WindingFill);
   cuadrado.moveTo(-20,-20);
   cuadrado.lineTo(20,-20);
@@ -43,7 +95,7 @@ void MainWindow::setupShapes(){
   cuadrado.lineTo(-20,-20);
 
 
-  /*Revisar si si sirve*/
+  /*Revisar si si sirve*//*
   QPainterPath arco;
   arco.arcMoveTo(0,0,50,50,20);
   arco.arcTo(0,0,50,50,20, 90);
@@ -85,5 +137,17 @@ void MainWindow::setupShapes(){
   shapes.append(figuras);
   shapes.append(triangulo);
   shapes.append(circulo);
-*/
-}
+*
+}*/
+
+
+
+scene->moveTo(10.0, -20);
+scene->lineTo(20, 20);
+scene->lineTo(30, -20);
+scene->lineTo(10, -20);
+scene->moveTo(35.0, 35.0);
+scene->lineTo(-25.0, 35.0);
+scene->lineTo(10.0, -25.0);
+scene->lineTo(-10.0, -25.0);
+scene->lineTo(35.0, 35.0);
