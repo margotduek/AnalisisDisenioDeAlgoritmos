@@ -1,0 +1,26 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2015-11-17T17:36:17
+#
+#-------------------------------------------------
+
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = ahoraSi
+TEMPLATE = app
+
+
+SOURCES += main.cpp\
+        mainwindow.cpp \
+    cuadrado.cpp \
+    triangulo.cpp
+
+HEADERS  += mainwindow.h \
+    cuadrado.h \
+    triangulo.h
+
+FORMS    += mainwindow.ui \
+    cuadrado.ui \
+    triangulo.ui
