@@ -218,12 +218,12 @@ void MainWindow::on_pushButton_2_clicked()
         scene->addLine(zoom*100,zoom*150,zoom*150,zoom*100);
     break;
     case 2:
-        poli.rotate(45);
+        //poli.rotate(45);
         imprimePoligono(zoom);
     break;
 
     case 3:
-        sombrero.rotate(45);
+        //sombrero.rotate(45);
         imprimeCurva(zoom);
     break;
 
